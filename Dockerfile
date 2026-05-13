@@ -43,7 +43,9 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat
 
 ENV NODE_ENV=production
-ENV PORT=3001
+# Do NOT bake PORT here — Railway sets it at runtime and the app reads
+# process.env.PORT. Baking a value can desync the listener from Railway's
+# routing layer.
 
 # Copy server build, node_modules (prod-only), and the static client bundle
 COPY --from=builder /app/server/dist ./dist

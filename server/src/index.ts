@@ -94,7 +94,9 @@ const upload = multer({
 // ---------- init ----------
 
 const app = express();
-const PORT = parseInt(process.env.SERVER_PORT ?? process.env.PORT ?? "3001", 10);
+// PORT first — Railway sets this and routes public traffic to it. SERVER_PORT
+// is only a local-dev convenience (to coexist with another app on :3001).
+const PORT = parseInt(process.env.PORT ?? process.env.SERVER_PORT ?? "3001", 10);
 
 // ---------- middleware ----------
 
