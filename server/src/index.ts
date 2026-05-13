@@ -150,31 +150,31 @@ app.listen(PORT, () => {
 // IMPORTANT: Static middleware must be registered BEFORE API routes so that
 // static assets (JS, CSS, images) are served directly without hitting the API limiter.
 
-let clientDist: string | undefined;
+// Always look for a built client bundle — don't gate on NODE_ENV, since
+// Railway containers don't always pass it through cleanly. If the bundle is
+// there, serve it; otherwise fall through to a helpful 503.
+console.log(`[server] NODE_ENV = ${JSON.stringify(process.env.NODE_ENV)}`);
+console.log(`[server] __dirname = ${__dirname}`);
 
-if (process.env.NODE_ENV === "production") {
-  const candidates = [
-    "/app/client-dist", // Docker container path
-    path.resolve(__dirname, "../../../../client-dist"), // relative from dist/server/src/
-    path.resolve(__dirname, "../../../client/dist"),
-  ];
-  
-  console.log(`[server] __dirname = ${__dirname}`);
-  console.log(`[server] looking for client bundle in:`, candidates);
-  
-  clientDist = candidates.find((p) => {
-    const exists = fs.existsSync(p);
-    console.log(`[server]   ${p} -> ${exists ? "FOUND" : "not found"}`);
-    return exists;
-  });
-  
-  if (clientDist) {
-    const files = fs.readdirSync(clientDist);
-    console.log(`[server] serving client bundle from ${clientDist}, files:`, files.slice(0, 10));
-    app.use(express.static(clientDist));
-  } else {
-    console.warn("[server] no client bundle found; running API-only");
-  }
+const candidates = [
+  "/app/client-dist", // Docker container path
+  path.resolve(__dirname, "../../../../client-dist"), // relative from dist/server/src/
+  path.resolve(__dirname, "../../../client/dist"),
+];
+console.log(`[server] looking for client bundle in:`, candidates);
+
+const clientDist: string | undefined = candidates.find((p) => {
+  const exists = fs.existsSync(p);
+  console.log(`[server]   ${p} -> ${exists ? "FOUND" : "not found"}`);
+  return exists;
+});
+
+if (clientDist) {
+  const files = fs.readdirSync(clientDist);
+  console.log(`[server] serving client bundle from ${clientDist}, files:`, files.slice(0, 20));
+  app.use(express.static(clientDist));
+} else {
+  console.warn("[server] no client bundle found; running API-only");
 }
 
 // ---------- routes ----------
@@ -228,8 +228,8 @@ if (clientDist) {
   app.get("*", (_req, res) => {
     res.sendFile(path.join(clientDist!, "index.html"));
   });
-} else if (process.env.NODE_ENV === "production") {
-  // No client bundle found - show helpful error
+} else {
+  // No client bundle found — surface a clear error instead of Express's 404.
   app.get("*", (_req, res) => {
     res.status(503).send(`
       <html>

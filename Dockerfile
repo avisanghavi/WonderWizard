@@ -61,8 +61,10 @@ RUN echo "=== Runtime client-dist contents ===" && ls -la /app/client-dist/
 # Attach a Railway Volume mounted at /app/data so this persists across deploys.
 RUN mkdir -p /app/data
 
-EXPOSE 3001
+# Documentation-only — actual port comes from runtime $PORT (Railway sets it).
+EXPOSE 8080
+# Healthcheck hits whatever port the app is actually on via $PORT.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:3001/api/health || exit 1
+  CMD wget -qO- "http://localhost:${PORT:-8080}/api/health" || exit 1
 
 CMD ["node", "dist/server/src/index.js"]
