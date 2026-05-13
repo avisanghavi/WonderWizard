@@ -108,11 +108,38 @@ app.use(express.json());
 // trust proxy (for accurate req.ip behind load balancers / Vite proxy)
 app.set("trust proxy", 1);
 
-// ---------- routes ----------
+// ---------- health check (before DB init so Railway can verify the process started) ----------
+
+let dbReady = false;
 
 app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+  res.json({
+    status: dbReady ? "ok" : "starting",
+    db: dbReady,
+    timestamp: new Date().toISOString(),
+  });
 });
+
+// ---------- startup ----------
+//
+// Start listening IMMEDIATELY so health checks pass, then initialize DB.
+// Routes that need the DB will fail gracefully until dbReady = true.
+
+app.listen(PORT, () => {
+  console.log(`[server] listening on http://localhost:${PORT}`);
+
+  // Initialize database after server is listening
+  try {
+    initDb();
+    dbReady = true;
+    console.log(`[server] database initialized, fully ready`);
+  } catch (err) {
+    console.error("[server] FATAL: database initialization failed:", err);
+    process.exit(1);
+  }
+});
+
+// ---------- routes ----------
 
 // General app-wide limiter (very generous; protects against accidental abuse)
 app.use("/api", generalLimiter);
@@ -180,14 +207,5 @@ if (process.env.NODE_ENV === "production") {
     console.warn("[server] no client bundle found; running API-only");
   }
 }
-
-// ---------- startup ----------
-
-// Initialize database before starting the server
-initDb();
-
-app.listen(PORT, () => {
-  console.log(`LabBuddy server listening on http://localhost:${PORT}`);
-});
 
 export default app;

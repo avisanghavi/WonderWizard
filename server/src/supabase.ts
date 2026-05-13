@@ -9,6 +9,10 @@ const SUPABASE_URL = process.env.SUPABASE_URL || "https://wdoiyhqeldnrjtrlcjvw.s
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SUPABASE_SERVICE_ROLE_KEY) {
+  console.error(
+    "[supabase] SUPABASE_SERVICE_ROLE_KEY not set. Available env vars:",
+    Object.keys(process.env).filter(k => k.includes("SUPABASE") || k.includes("supabase")).join(", ") || "(none with SUPABASE)",
+  );
   if (process.env.NODE_ENV === "production") {
     throw new Error("SUPABASE_SERVICE_ROLE_KEY env var is required in production.");
   }
