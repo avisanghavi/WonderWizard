@@ -19,7 +19,7 @@ COPY server/package.json ./server/
 
 RUN npm ci
 
-# Copy source
+# Copy source (cache bust: v2)
 COPY shared ./shared
 COPY client ./client
 COPY server ./server
@@ -31,6 +31,9 @@ ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
 ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
 
 RUN npm run build
+
+# Debug: verify client build exists
+RUN echo "=== Client build contents ===" && ls -la /app/client/dist/ || echo "CLIENT BUILD MISSING!"
 
 # ----- Stage 2: slim runtime -----
 FROM node:22-alpine AS runtime
@@ -48,6 +51,9 @@ COPY --from=builder /app/shared ./shared
 COPY --from=builder /app/server/package.json ./package.json
 COPY --from=builder /app/client/dist ./client-dist
 COPY --from=builder /app/node_modules ./node_modules
+
+# Debug: verify client-dist was copied
+RUN echo "=== Runtime client-dist contents ===" && ls -la /app/client-dist/
 
 # Writable directory for the SQLite database (sessions, gamification, notebook).
 # Attach a Railway Volume mounted at /app/data so this persists across deploys.

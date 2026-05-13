@@ -139,6 +139,42 @@ app.listen(PORT, () => {
   }
 });
 
+// ---------- static client (production) ----------
+//
+// When building the docker image we copy the Vite client bundle to
+// /app/client-dist. Serve it from the same Express server so we deploy
+// a single container.
+//
+// IMPORTANT: Static middleware must be registered BEFORE API routes so that
+// static assets (JS, CSS, images) are served directly without hitting the API limiter.
+
+let clientDist: string | undefined;
+
+if (process.env.NODE_ENV === "production") {
+  const candidates = [
+    "/app/client-dist", // Docker container path
+    path.resolve(__dirname, "../../../../client-dist"), // relative from dist/server/src/
+    path.resolve(__dirname, "../../../client/dist"),
+  ];
+  
+  console.log(`[server] __dirname = ${__dirname}`);
+  console.log(`[server] looking for client bundle in:`, candidates);
+  
+  clientDist = candidates.find((p) => {
+    const exists = fs.existsSync(p);
+    console.log(`[server]   ${p} -> ${exists ? "FOUND" : "not found"}`);
+    return exists;
+  });
+  
+  if (clientDist) {
+    const files = fs.readdirSync(clientDist);
+    console.log(`[server] serving client bundle from ${clientDist}, files:`, files.slice(0, 10));
+    app.use(express.static(clientDist));
+  } else {
+    console.warn("[server] no client bundle found; running API-only");
+  }
+}
+
 // ---------- routes ----------
 
 // General app-wide limiter (very generous; protects against accidental abuse)
@@ -185,28 +221,24 @@ app.get("/api/sessions/:sessionId/messages", (req, res) => {
   }
 });
 
-// ---------- static client (production) ----------
-//
-// When building the docker image we copy the Vite client bundle to
-// /app/client-dist. Serve it from the same Express server so we deploy
-// a single container.
-if (process.env.NODE_ENV === "production") {
-  const candidates = [
-    "/app/client-dist", // Docker container path
-    path.resolve(__dirname, "../../../../client-dist"), // relative from dist/server/src/
-    path.resolve(__dirname, "../../../client/dist"),
-  ];
-  const clientDist = candidates.find((p) => fs.existsSync(p));
-  if (clientDist) {
-    console.log(`[server] serving client bundle from ${clientDist}`);
-    app.use(express.static(clientDist));
-    // SPA fallback — anything non-/api routes to index.html
-    app.get(/^(?!\/api).*/, (_req, res) => {
-      res.sendFile(path.join(clientDist, "index.html"));
-    });
-  } else {
-    console.warn("[server] no client bundle found; running API-only. Checked:", candidates.join(", "));
-  }
+// SPA fallback — anything non-/api routes to index.html (must be AFTER API routes)
+if (clientDist) {
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(clientDist!, "index.html"));
+  });
+} else if (process.env.NODE_ENV === "production") {
+  // No client bundle found - show helpful error
+  app.get("*", (_req, res) => {
+    res.status(503).send(`
+      <html>
+        <body style="font-family: system-ui; padding: 2rem;">
+          <h1>LabBuddy API Server</h1>
+          <p>The client bundle was not found. The API is running at <code>/api/*</code>.</p>
+          <p>Check the build logs to ensure the client built successfully.</p>
+        </body>
+      </html>
+    `);
+  });
 }
 
 export default app;
