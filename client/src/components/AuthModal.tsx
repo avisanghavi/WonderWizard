@@ -101,12 +101,23 @@ export default function AuthModal({
         </button>
 
         <div className="auth-modal__header">
+          <div
+            aria-hidden="true"
+            style={{
+              fontSize: 36,
+              lineHeight: 1,
+              marginBottom: 10,
+              filter: 'drop-shadow(0 2px 6px rgba(99, 102, 241, 0.25))',
+            }}
+          >
+            {'🧪'}
+          </div>
           <h2 className="auth-modal__title">
-            {mode === 'signup' ? 'Create Parent Account' : 'Welcome Back'}
+            {mode === 'signup' ? 'Create your parent account' : 'Welcome back'}
           </h2>
           <p className="auth-modal__subtitle">
             {mode === 'signup'
-              ? 'Manage your kids, monitor their learning, and set boundaries.'
+              ? "We'll keep your kids' learning safe, monitored, and on track."
               : 'Sign in to your parent dashboard.'}
           </p>
         </div>
