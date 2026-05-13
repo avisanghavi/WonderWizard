@@ -50,8 +50,7 @@ COPY --from=builder /app/client/dist ./client-dist
 COPY --from=builder /app/node_modules ./node_modules
 
 # Writable directory for the SQLite database (sessions, gamification, notebook).
-# Mount a Railway volume here for persistence.
-VOLUME ["/app/data"]
+# Attach a Railway Volume mounted at /app/data so this persists across deploys.
 RUN mkdir -p /app/data
 
 EXPOSE 3001
