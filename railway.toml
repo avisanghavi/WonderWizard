@@ -8,7 +8,7 @@ dockerfilePath = "Dockerfile"
 buildArgs = ["VITE_SUPABASE_URL", "VITE_SUPABASE_ANON_KEY"]
 
 [deploy]
-startCommand = "node dist/index.js"
+startCommand = "node dist/server/src/index.js"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
