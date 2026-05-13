@@ -192,7 +192,8 @@ app.get("/api/sessions/:sessionId/messages", (req, res) => {
 // a single container.
 if (process.env.NODE_ENV === "production") {
   const candidates = [
-    path.resolve(__dirname, "../../client-dist"),
+    "/app/client-dist", // Docker container path
+    path.resolve(__dirname, "../../../../client-dist"), // relative from dist/server/src/
     path.resolve(__dirname, "../../../client/dist"),
   ];
   const clientDist = candidates.find((p) => fs.existsSync(p));
@@ -204,7 +205,7 @@ if (process.env.NODE_ENV === "production") {
       res.sendFile(path.join(clientDist, "index.html"));
     });
   } else {
-    console.warn("[server] no client bundle found; running API-only");
+    console.warn("[server] no client bundle found; running API-only. Checked:", candidates.join(", "));
   }
 }
 
