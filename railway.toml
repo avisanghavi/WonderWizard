@@ -1,0 +1,26 @@
+# Railway deployment config for LabBuddy.
+# After `railway init`, attach a volume to /app/data so the SQLite DB persists.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+# Pass Vite envs into the build so they get baked into the client bundle.
+buildArgs = ["VITE_SUPABASE_URL", "VITE_SUPABASE_ANON_KEY"]
+
+[deploy]
+startCommand = "node dist/index.js"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+
+# Required env vars to set in the Railway dashboard:
+#   NODE_ENV=production
+#   CLIENT_ORIGIN=https://<your-railway-host>
+#   SUPABASE_URL=https://wdoiyhqeldnrjtrlcjvw.supabase.co
+#   SUPABASE_SERVICE_ROLE_KEY=<server secret>
+#   VITE_SUPABASE_URL=https://wdoiyhqeldnrjtrlcjvw.supabase.co  (build arg)
+#   VITE_SUPABASE_ANON_KEY=<publishable key>                  (build arg)
+#   ANTHROPIC_API_KEY=<key>
+# Optional:
+#   FAL_KEY, OPENAI_API_KEY, STRIPE_*

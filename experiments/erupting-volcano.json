@@ -1,0 +1,157 @@
+{
+  "id": "exp-001",
+  "title": "Erupting Volcano",
+  "slug": "erupting-volcano",
+  "description": "Build a mini volcano and watch it erupt with a fizzy chemical reaction! Mix baking soda and vinegar to create a bubbly, colorful eruption while learning about chemical reactions and gas production.",
+  "category": "chemistry",
+  "ageRange": { "min": 5, "max": 12 },
+  "gradeBand": "3-5",
+  "ngssStandard": "PS1.B",
+  "ngssDescription": "Chemical Reactions: When two or more different substances are mixed, a new substance with different properties may be formed. Mixing baking soda and vinegar produces carbon dioxide gas, which creates the eruption effect.",
+  "safetyTier": "green",
+  "difficulty": "easy",
+  "durationMinutes": 20,
+  "estimatedCost": { "min": 8, "max": 11 },
+  "supplies": [
+    {
+      "item": "Baking soda (box)",
+      "quantity": "1 box (16 oz)",
+      "estimatedPrice": 1.5,
+      "store": "grocery"
+    },
+    {
+      "item": "White vinegar",
+      "quantity": "1 bottle (32 oz)",
+      "estimatedPrice": 2.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Dish soap",
+      "quantity": "1 small bottle",
+      "estimatedPrice": 1.5,
+      "store": "grocery",
+      "budgetAlternative": "Use a few drops from a bottle you already have at home"
+    },
+    {
+      "item": "Red food coloring",
+      "quantity": "1 small bottle",
+      "estimatedPrice": 1.5,
+      "store": "grocery",
+      "budgetAlternative": "Mix red and yellow paint with water for a similar look"
+    },
+    {
+      "item": "Small plastic bottle (empty, 12-16 oz)",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery",
+      "budgetAlternative": "Reuse any clean plastic bottle from recycling"
+    },
+    {
+      "item": "Modeling clay or play dough",
+      "quantity": "1 pack",
+      "estimatedPrice": 3.0,
+      "store": "craft",
+      "budgetAlternative": "Make homemade dough with flour, salt, and water"
+    },
+    {
+      "item": "Baking tray or large plate",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery",
+      "budgetAlternative": "Use a cardboard box lid lined with foil"
+    },
+    {
+      "item": "Measuring spoons",
+      "quantity": "1 set",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    }
+  ],
+  "safetyNotes": [
+    "Adult supervision recommended for ages 5-7 (safety tier is yellow for this age group).",
+    "Perform the experiment on a tray or in a sink to contain the mess.",
+    "Do not taste or drink any of the mixtures.",
+    "Vinegar can sting if it gets in your eyes. If contact occurs, rinse with water for 1 minute.",
+    "Wash hands thoroughly after the experiment."
+  ],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "Place the empty plastic bottle in the center of the baking tray. Mold the clay or play dough around the bottle to form a volcano shape. Leave the top of the bottle open — that is your volcano's crater.",
+      "tip": "Make the base wide and sturdy so it does not tip over. You can paint or decorate the outside to look like a real volcano!",
+      "durationMinutes": 5
+    },
+    {
+      "stepNumber": 2,
+      "instruction": "Add 3 tablespoons of baking soda into the plastic bottle through the opening at the top.",
+      "scienceNote": "Baking soda is a base (the opposite of an acid). Its chemical name is sodium bicarbonate (NaHCO3).",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 3,
+      "instruction": "Add a big squirt of dish soap (about 1 tablespoon) into the bottle on top of the baking soda.",
+      "scienceNote": "The dish soap does not cause the reaction, but it traps the carbon dioxide gas in bubbles, making the eruption foamier and more dramatic.",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 4,
+      "instruction": "Add 5-8 drops of red food coloring into the bottle. For an orange lava look, add 3 drops of red and 2 drops of yellow.",
+      "tip": "Be careful not to get food coloring on clothes — it can stain!",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 5,
+      "instruction": "Pour about half a cup (120 mL) of vinegar into a measuring cup. Get ready — the eruption will start as soon as you pour!",
+      "scienceNote": "Vinegar is an acid (acetic acid). When an acid meets a base, they react.",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 6,
+      "instruction": "Quickly pour the vinegar into the bottle and step back! Watch the foamy lava erupt out of your volcano!",
+      "scienceNote": "The baking soda (base) and vinegar (acid) react to form carbon dioxide gas (CO2), water, and sodium acetate. The CO2 gas creates all those bubbles and pushes the mixture up and out of the bottle — just like pressure builds inside a real volcano!",
+      "safetyWarning": "Stand back after pouring so the foam does not splash in your face.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 7,
+      "instruction": "Once the eruption slows down, try adding more baking soda (2 tablespoons) and then more vinegar to trigger a second eruption. Experiment: what happens if you use more or less baking soda?",
+      "tip": "Try warm vinegar versus cold vinegar and see which erupts faster!",
+      "scienceNote": "Changing the amounts changes how much gas is produced. Warm vinegar speeds up the reaction because heat gives molecules more energy to react.",
+      "durationMinutes": 5
+    },
+    {
+      "stepNumber": 8,
+      "instruction": "Clean up by carefully pouring the leftover liquid down the sink drain. Rinse the tray and bottle. The baking soda and vinegar mixture is safe to wash down the drain — it is just salty water and CO2 at this point.",
+      "tip": "The leftover liquid is actually a great drain cleaner!",
+      "durationMinutes": 4
+    }
+  ],
+  "reflectionPrompts": [
+    {
+      "question": "What new substance was created when the baking soda and vinegar mixed? How do you know something new was made?",
+      "hint": "Think about the bubbles you saw. Those bubbles were a gas that was not there before you mixed the ingredients."
+    },
+    {
+      "question": "How is this experiment similar to a real volcanic eruption, and how is it different?",
+      "hint": "Real volcanoes are powered by heat and pressure from melted rock deep underground, not a chemical reaction between an acid and a base. But both involve pressure pushing material upward and outward."
+    },
+    {
+      "question": "If you wanted to make the biggest eruption possible, what would you change about the experiment? Why?",
+      "hint": "Think about the amounts of baking soda and vinegar, the temperature, and the size of the bottle opening."
+    }
+  ],
+  "nextExperiments": [
+    "sink-or-float",
+    "water-cycle-in-a-bag"
+  ],
+  "tags": [
+    "chemical reaction",
+    "acid and base",
+    "volcano",
+    "carbon dioxide",
+    "messy science",
+    "classic experiment",
+    "kitchen science"
+  ],
+  "wowFactor": 5
+}

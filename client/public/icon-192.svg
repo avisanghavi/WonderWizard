@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg192" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B83FF"/>
+      <stop offset="100%" stop-color="#6C63FF"/>
+    </linearGradient>
+    <linearGradient id="liquid192" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7EDDD7"/>
+      <stop offset="100%" stop-color="#4ECDC4"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="40" fill="url(#bg192)"/>
+  <rect x="66" y="36" width="60" height="12" rx="4" fill="#FFFFFF"/>
+  <rect x="74" y="48" width="44" height="30" rx="2" fill="#E8EBFF"/>
+  <path d="M 66 78 L 126 78 L 146 142 Q 146 162 96 162 Q 46 162 46 142 Z"
+        fill="url(#liquid192)" stroke="#FFFFFF" stroke-width="3"/>
+  <ellipse cx="96" cy="97" rx="38" ry="5" fill="#FFFFFF" opacity="0.35"/>
+  <circle cx="82" cy="120" r="5" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="105" cy="112" r="4" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="94" cy="135" r="6" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="112" cy="130" r="3" fill="#FFFFFF" opacity="0.8"/>
+</svg>

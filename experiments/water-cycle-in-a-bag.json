@@ -1,0 +1,130 @@
+{
+  "id": "exp-003",
+  "title": "Water Cycle in a Bag",
+  "slug": "water-cycle-in-a-bag",
+  "description": "Create a miniature water cycle inside a zip-lock bag taped to a sunny window! Watch evaporation, condensation, and precipitation happen right before your eyes over the course of a few days.",
+  "category": "earth-science",
+  "ageRange": { "min": 6, "max": 11 },
+  "gradeBand": "3-5",
+  "ngssStandard": "ESS2.A",
+  "ngssDescription": "Earth Materials and Systems: Water is found in the ocean, rivers, lakes, and ponds. Water exists as solid ice and in liquid form. It can be observed cycling through Earth's systems as it evaporates, condenses, and precipitates.",
+  "safetyTier": "green",
+  "difficulty": "easy",
+  "durationMinutes": 10,
+  "estimatedCost": { "min": 4, "max": 7 },
+  "supplies": [
+    {
+      "item": "Quart-size zip-lock bag (sturdy, freezer-grade recommended)",
+      "quantity": "1",
+      "estimatedPrice": 0.50,
+      "store": "grocery"
+    },
+    {
+      "item": "Water",
+      "quantity": "1/2 cup",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Blue food coloring",
+      "quantity": "2-3 drops",
+      "estimatedPrice": 1.50,
+      "store": "grocery",
+      "budgetAlternative": "Optional — the experiment works fine without coloring"
+    },
+    {
+      "item": "Clear packing tape or strong masking tape",
+      "quantity": "4-6 strips",
+      "estimatedPrice": 2.00,
+      "store": "grocery"
+    },
+    {
+      "item": "Permanent marker (blue and black)",
+      "quantity": "1-2",
+      "estimatedPrice": 1.50,
+      "store": "craft",
+      "budgetAlternative": "Use any marker you have at home"
+    },
+    {
+      "item": "Sunny window",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    }
+  ],
+  "safetyNotes": [
+    "Make sure the zip-lock bag is sealed completely before taping it to the window to prevent leaks.",
+    "Use a step stool if the window is too high, and have an adult help with taping.",
+    "Food coloring can stain clothes and surfaces — handle carefully.",
+    "Do not use hot water."
+  ],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "Using the permanent markers, draw the water cycle on the outside of the zip-lock bag. Draw a sun at the top, clouds in the upper corners, wavy water lines at the bottom, and arrows showing water going up (evaporation) and coming down (precipitation).",
+      "tip": "Label each part: 'Evaporation,' 'Condensation,' 'Precipitation,' and 'Collection.' This will help you see each stage happening inside the bag!",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 2,
+      "instruction": "Pour half a cup of water into the bag. Add 2-3 drops of blue food coloring and gently swish to mix. The blue water represents the ocean or a lake.",
+      "scienceNote": "On Earth, about 71% of the surface is covered by water. Most of it is in the oceans. The sun's energy heats this water and starts the water cycle.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 3,
+      "instruction": "Squeeze out most of the extra air and seal the zip-lock bag tightly. Press along the entire seal to make sure there are no gaps. Double-check by gently squeezing the bag — no water should leak out.",
+      "safetyWarning": "If the bag leaks, start over with a new bag. A leaky bag will not show the water cycle and will make a mess on your window.",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 4,
+      "instruction": "Tape the sealed bag to a window that gets direct sunlight for at least part of the day. Use several strips of tape across the top of the bag so it holds securely. The water should sit at the bottom of the bag.",
+      "tip": "A south-facing window (in the Northern Hemisphere) usually gets the most sunlight. The more sun, the faster you will see results!",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 5,
+      "instruction": "Check on your bag several times during the day and over the next 2-3 days. Look for water droplets forming on the inside of the bag above the water line. You should see small drops collecting on the upper walls and eventually trickling back down.",
+      "scienceNote": "The sun heats the water, causing some to evaporate (turn from liquid to gas). The water vapor rises and hits the cooler plastic at the top of the bag, where it condenses (turns back into liquid droplets) — just like clouds forming in the atmosphere. When the droplets get heavy enough, they run down the bag — that is precipitation, like rain!",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 6,
+      "instruction": "After 2-3 days of observation, draw or write in a notebook what you saw each day. Record how the amount of condensation changed from morning to afternoon (when the sun is strongest). Note whether you saw droplets 'raining' back down.",
+      "tip": "Take photos at different times of day to compare. The differences can be subtle, and photos help you notice changes you might miss.",
+      "scienceNote": "This is exactly what happens on Earth, but at a much larger scale. The sun heats oceans and lakes, water evaporates into the atmosphere, forms clouds (condensation), and eventually falls back as rain or snow (precipitation). Your bag is a mini Earth!",
+      "durationMinutes": 2
+    }
+  ],
+  "reflectionPrompts": [
+    {
+      "question": "Did the total amount of water in the bag change over the course of the experiment? Where did the water go when it seemed to disappear from the bottom?",
+      "hint": "The water did not leave the bag — it just changed form. It evaporated into invisible water vapor, then condensed back into visible droplets on the walls. The total amount of water stayed the same, just like on Earth."
+    },
+    {
+      "question": "Why did more water droplets appear on the bag during the sunny afternoon compared to the morning or evening?",
+      "hint": "The sun provides energy (heat) that causes evaporation. More sunlight means more energy, which means more water evaporates and then condenses."
+    },
+    {
+      "question": "What do you think would happen if you put the bag in a dark closet instead of a sunny window? Why?",
+      "hint": "Without the sun's heat energy, very little evaporation would happen. You would see few or no water droplets forming. The water cycle needs an energy source to work."
+    }
+  ],
+  "nextExperiments": [
+    "plant-growth-sunlight",
+    "erupting-volcano",
+    "sink-or-float"
+  ],
+  "tags": [
+    "water cycle",
+    "evaporation",
+    "condensation",
+    "precipitation",
+    "earth science",
+    "long observation",
+    "window experiment",
+    "weather"
+  ],
+  "wowFactor": 4
+}

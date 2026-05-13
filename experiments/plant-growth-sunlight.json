@@ -1,0 +1,156 @@
+{
+  "id": "exp-005",
+  "title": "Plant Growth with Variable Sunlight",
+  "slug": "plant-growth-sunlight",
+  "description": "Grow bean seeds under different sunlight conditions and observe how light affects plant growth over two weeks. Set up a simple controlled experiment to discover why plants need sunlight to survive and thrive.",
+  "category": "biology",
+  "ageRange": { "min": 5, "max": 8 },
+  "gradeBand": "K-2",
+  "ngssStandard": "LS1.C",
+  "ngssDescription": "Organization for Matter and Energy Flow in Organisms: All animals need food in order to live and grow. They obtain their food from plants or from other animals. Plants need water and light to live and grow.",
+  "safetyTier": "green",
+  "difficulty": "medium",
+  "durationMinutes": 15,
+  "estimatedCost": { "min": 8, "max": 12 },
+  "supplies": [
+    {
+      "item": "Dried bean seeds (lima beans or pinto beans)",
+      "quantity": "6-9 seeds",
+      "estimatedPrice": 1.50,
+      "store": "grocery",
+      "budgetAlternative": "Use dried beans from a bag of soup mix"
+    },
+    {
+      "item": "Small plastic cups or pots (8-10 oz)",
+      "quantity": "3",
+      "estimatedPrice": 1.00,
+      "store": "grocery",
+      "budgetAlternative": "Reuse clean yogurt cups — poke a drainage hole in the bottom"
+    },
+    {
+      "item": "Potting soil",
+      "quantity": "1 small bag (4-8 quarts)",
+      "estimatedPrice": 3.50,
+      "store": "hardware",
+      "budgetAlternative": "Use clean garden soil mixed with a little sand"
+    },
+    {
+      "item": "Masking tape and marker (for labels)",
+      "quantity": "1 roll tape, 1 marker",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Ruler (centimeters)",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Small plate or tray (to catch water drainage)",
+      "quantity": "3",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Notebook or printed observation log",
+      "quantity": "1",
+      "estimatedPrice": 1.00,
+      "store": "grocery"
+    },
+    {
+      "item": "Watering can or small cup for watering",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Cardboard box (large enough to cover one cup)",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery",
+      "budgetAlternative": "Any box from your recycling bin"
+    }
+  ],
+  "safetyNotes": [
+    "Wash hands after handling soil, as it may contain bacteria or small organisms.",
+    "Do not eat the bean seeds or any plants grown during this experiment.",
+    "If using a sharp tool to poke drainage holes, have an adult do it.",
+    "Keep soil and water away from electronics and books."
+  ],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "Label your three cups with masking tape: Cup A — 'Full Sun,' Cup B — 'Partial Sun,' and Cup C — 'No Sun.' Fill each cup about three-quarters full with potting soil.",
+      "scienceNote": "In a real experiment, you change only one thing (the variable) and keep everything else the same (the controls). Here, sunlight is your variable. You will give all three cups the same soil, water, and seeds — only the amount of light will be different.",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 2,
+      "instruction": "Plant 2-3 bean seeds in each cup. Push each seed about 1 inch (2.5 cm) deep into the soil. Cover the seeds with soil and gently pat it down. Water each cup slowly until the soil is damp but not soaking wet.",
+      "tip": "Planting multiple seeds in each cup increases the chance that at least one will sprout. If all sprout, you can compare the biggest one from each cup.",
+      "durationMinutes": 4
+    },
+    {
+      "stepNumber": 3,
+      "instruction": "Place the three cups in their different light conditions. Put Cup A (Full Sun) on a windowsill that gets direct sunlight for most of the day. Put Cup B (Partial Sun) in a spot that gets some indirect light but not direct sun, like a countertop away from the window. Cover Cup C (No Sun) completely with the cardboard box so no light gets in.",
+      "scienceNote": "Plants use sunlight as energy to make their own food through a process called photosynthesis. Without light, a plant cannot make food and will eventually stop growing.",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 4,
+      "instruction": "Create an observation log in your notebook. Make a table with columns for: Date, Cup A height (cm), Cup A color and notes, Cup B height (cm), Cup B color and notes, Cup C height (cm), Cup C color and notes. Every 2 days, check on your plants and fill in the table.",
+      "tip": "Take a photo of all three cups side by side each time you observe. Photos make it easy to see changes over time!",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 5,
+      "instruction": "Water all three cups with the same amount of water (about 2-3 tablespoons) every 2-3 days, or when the top of the soil feels dry. Remember to briefly lift the box off Cup C to water it, then cover it again right away.",
+      "safetyWarning": "Do not overwater — soggy soil can cause the seeds to rot instead of sprout. The soil should feel like a damp sponge, not dripping wet.",
+      "scienceNote": "Keeping the water amount the same for all cups is essential. If one cup got more water, you could not be sure whether differences in growth were caused by light or water. This is what scientists call controlling variables.",
+      "durationMinutes": 1
+    },
+    {
+      "stepNumber": 6,
+      "instruction": "After 10-14 days, do a final observation. Measure the height of the tallest plant in each cup. Note the color of the leaves, the thickness of the stems, and the overall health of each plant. Compare your three cups. Which plant grew tallest? Which looks healthiest? Were there any surprises?",
+      "scienceNote": "You will likely find that Cup A (Full Sun) has the tallest, greenest plants. Cup B (Partial Sun) may grow but look lighter or leggier (stretched out, reaching for light). Cup C (No Sun) may sprout but will look pale yellow or white and weak — without light, the plant cannot make chlorophyll, the green pigment that captures light energy for photosynthesis.",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 7,
+      "instruction": "Draw a bar graph showing the final height of the tallest plant in each cup. Write one or two sentences summarizing what you learned: How does sunlight affect plant growth?",
+      "tip": "If Cup C sprouted at all, it used energy stored inside the seed. That stored energy runs out quickly without sunlight to make more food. Try leaving Cup C uncovered now and check back in a week — can the plant recover?",
+      "durationMinutes": 3
+    }
+  ],
+  "reflectionPrompts": [
+    {
+      "question": "Why was it important to give all three cups the same amount of water and the same type of soil?",
+      "hint": "If you changed two things at once (like light and water), you would not know which change caused the difference in growth. A fair test changes only one thing at a time."
+    },
+    {
+      "question": "The plant in the dark cup (Cup C) might have sprouted a little. Where did it get the energy to grow if it had no sunlight?",
+      "hint": "Seeds contain a small amount of stored food (energy) inside them. That is enough to start sprouting, but not enough to keep growing for long without sunlight to make new food."
+    },
+    {
+      "question": "What would happen if you set up a fourth cup that got full sunlight but no water? What does this tell you about what plants need to grow?",
+      "hint": "That plant would wilt and die too. Plants need both sunlight and water (plus nutrients from soil and carbon dioxide from air) to survive. Taking away any one of these essentials will eventually harm the plant."
+    }
+  ],
+  "nextExperiments": [
+    "water-cycle-in-a-bag",
+    "sink-or-float",
+    "erupting-volcano"
+  ],
+  "tags": [
+    "plants",
+    "photosynthesis",
+    "sunlight",
+    "controlled experiment",
+    "biology",
+    "long-term observation",
+    "growing",
+    "variables"
+  ],
+  "wowFactor": 3
+}

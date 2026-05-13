@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "labbuddy-dev",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /Users/jarvis/Desktop/labbuddy && export PATH=/usr/local/bin:$PATH && npm run dev"],
+      "port": 3000
+    }
+  ]
+}

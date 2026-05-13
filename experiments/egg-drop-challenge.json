@@ -1,0 +1,191 @@
+{
+  "id": "exp-004",
+  "title": "Egg Drop Engineering Challenge",
+  "slug": "egg-drop-challenge",
+  "description": "Design and build a protective device that keeps a raw egg from cracking when dropped from a high point! Apply engineering design principles as you brainstorm, prototype, test, and improve your egg protection system.",
+  "category": "engineering",
+  "ageRange": { "min": 10, "max": 14 },
+  "gradeBand": "6-8",
+  "ngssStandard": "ETS1.B",
+  "ngssDescription": "Developing Possible Solutions: A solution needs to be tested, and then modified on the basis of the test results, in order to improve it. Models of all kinds are important for testing solutions. The iterative process of testing the most promising solutions and modifying what is proposed on the basis of the test results leads to greater refinement and ultimately to an optimal solution.",
+  "safetyTier": "yellow",
+  "difficulty": "hard",
+  "durationMinutes": 45,
+  "estimatedCost": { "min": 10, "max": 15 },
+  "supplies": [
+    {
+      "item": "Raw eggs",
+      "quantity": "3-4 (extras for testing)",
+      "estimatedPrice": 1.50,
+      "store": "grocery"
+    },
+    {
+      "item": "Bubble wrap",
+      "quantity": "1 small roll or sheet (12 x 24 inches)",
+      "estimatedPrice": 2.00,
+      "store": "hardware",
+      "budgetAlternative": "Use crumpled newspaper for cushioning"
+    },
+    {
+      "item": "Rubber bands (assorted sizes)",
+      "quantity": "1 bag",
+      "estimatedPrice": 1.50,
+      "store": "grocery"
+    },
+    {
+      "item": "Popsicle sticks or wooden craft sticks",
+      "quantity": "20-30",
+      "estimatedPrice": 2.00,
+      "store": "craft"
+    },
+    {
+      "item": "Plastic straws",
+      "quantity": "10-15",
+      "estimatedPrice": 1.00,
+      "store": "grocery"
+    },
+    {
+      "item": "Cotton balls",
+      "quantity": "1 bag (about 30)",
+      "estimatedPrice": 1.50,
+      "store": "pharmacy"
+    },
+    {
+      "item": "Masking tape or painter's tape",
+      "quantity": "1 roll",
+      "estimatedPrice": 2.50,
+      "store": "hardware"
+    },
+    {
+      "item": "Small plastic bags (sandwich size)",
+      "quantity": "2-3",
+      "estimatedPrice": 0.25,
+      "store": "grocery"
+    },
+    {
+      "item": "Cardboard scraps (cereal box or similar)",
+      "quantity": "2-3 pieces",
+      "estimatedPrice": 0.0,
+      "store": "grocery",
+      "budgetAlternative": "Cut up any cardboard box from your recycling"
+    },
+    {
+      "item": "String or yarn",
+      "quantity": "3 feet",
+      "estimatedPrice": 0.50,
+      "store": "craft"
+    },
+    {
+      "item": "Newspaper (for mess cleanup)",
+      "quantity": "several sheets",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Measuring tape or ruler",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "hardware"
+    }
+  ],
+  "safetyNotes": [
+    "Raw eggs may contain salmonella bacteria. Wash your hands thoroughly with soap and water after handling raw eggs.",
+    "Perform the drop test outdoors or over a surface covered with newspaper for easy cleanup.",
+    "Do not drop eggs from extreme heights (keep drops to 8 feet or less). Do not climb on unstable surfaces to reach height — use a sturdy stepladder, a balcony, or a stairwell with an adult present.",
+    "Broken eggs are slippery. Clean up broken eggs immediately to prevent falls.",
+    "If doing this as a group, make sure no one is standing in the drop zone below.",
+    "An adult must supervise the dropping phase of this experiment."
+  ],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "Define your challenge: Design a container that will protect a raw egg from cracking when dropped from a height of 6 to 8 feet. Your container can be no larger than a soccer ball. You have 25 minutes to design and build before testing.",
+      "scienceNote": "Engineers always start by clearly defining the problem, including constraints (rules) and criteria (what success looks like). Your constraint is the size limit. Your criterion is that the egg must survive the drop without cracking.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 2,
+      "instruction": "Brainstorm at least 3 different design ideas. Sketch each one on paper with labels. Think about: How will you cushion the egg? How will you slow the fall? How will you absorb the impact?",
+      "tip": "Think about what happens in a car crash — seatbelts, airbags, and crumple zones all absorb energy. Your egg container needs to do the same thing!",
+      "scienceNote": "When the egg hits the ground, its kinetic energy (energy of movement) must go somewhere. If it goes into the egg, the shell cracks. Your job is to design something that absorbs or redirects that energy away from the egg.",
+      "durationMinutes": 5
+    },
+    {
+      "stepNumber": 3,
+      "instruction": "Choose your best design idea. Write a list of which supplies you will use and how. Think about which materials are best for cushioning (soft materials like cotton and bubble wrap) and which are best for structure (stiff materials like popsicle sticks and cardboard).",
+      "scienceNote": "Soft materials work by decelerating the egg slowly — spreading the impact force over a longer time. Stiff structures work by distributing force across a larger area. The best designs often combine both approaches.",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 4,
+      "instruction": "Build your egg protection device! Wrap, tape, and assemble your materials around one raw egg. Make sure the egg is held firmly in place and cannot rattle around inside.",
+      "tip": "Place the egg inside a plastic bag first. That way, if it does crack, the mess is contained and cleanup is easier.",
+      "durationMinutes": 12
+    },
+    {
+      "stepNumber": 5,
+      "instruction": "Before the real test, inspect your design. Gently shake it — does the egg move around inside? Press lightly on each side — is there enough cushioning? Make adjustments now.",
+      "scienceNote": "Real engineers always inspect and review their designs before testing. This step is called quality assurance.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 6,
+      "instruction": "Go outside or to your drop location. Lay newspaper on the ground below the drop zone. Measure the drop height with a measuring tape and record it.",
+      "safetyWarning": "Make sure the area below is clear of people and pets. Have an adult supervise or perform the drop from height.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 7,
+      "instruction": "Drop your container from the measured height. Do not throw it — hold it out and release it straight down. Watch carefully how it lands. Does it bounce? Tumble? Land flat?",
+      "tip": "Have someone record the drop on a phone in slow motion if possible — it is amazing to watch the replay!",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 8,
+      "instruction": "Carefully open your container and inspect the egg. Did it survive? Check for any cracks, even hairline ones. Record your result: survived, cracked, or completely broken.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 9,
+      "instruction": "Whether the egg survived or not, analyze your design. What worked well? What failed? If the egg broke, where did it break and why? Write down at least 2 things you would change in your next design.",
+      "scienceNote": "This step is the most important part of the engineering design process. Engineers learn more from failures than from successes. The Wright brothers crashed many gliders before they built one that flew!",
+      "durationMinutes": 5
+    },
+    {
+      "stepNumber": 10,
+      "instruction": "If you have extra eggs, redesign and rebuild based on what you learned. Test again from the same height — or try a greater height! Compare your results from round 1 to round 2.",
+      "scienceNote": "This cycle of design, test, analyze, and redesign is called iteration. Professional engineers may go through dozens of iterations before a product is ready. Each round gets closer to the best possible solution.",
+      "durationMinutes": 10
+    }
+  ],
+  "reflectionPrompts": [
+    {
+      "question": "What forces acted on the egg during the drop, and how did your design address each one?",
+      "hint": "Gravity pulled the egg down, accelerating it. When it hit the ground, a large impact force pushed back up. Your cushioning materials absorbed energy and reduced the peak force on the egg. Think about Newton's second law: Force equals mass times acceleration."
+    },
+    {
+      "question": "If you could use any material in the world (not just the supplies provided), what would you use and why?",
+      "hint": "Think about materials designed for impact protection in real life: memory foam, silicone gel, parachute fabric, crumple zones in cars. What properties do these materials have in common?"
+    },
+    {
+      "question": "How is the engineering design process (define, brainstorm, build, test, improve) useful outside of science class?",
+      "hint": "Think about any time you need to solve a problem — writing an essay (draft, revise, edit), learning a sport (practice, analyze, adjust), or even cooking a new recipe. Iteration and learning from failure are universal skills."
+    }
+  ],
+  "nextExperiments": [
+    "erupting-volcano",
+    "sink-or-float",
+    "water-cycle-in-a-bag"
+  ],
+  "tags": [
+    "engineering design",
+    "egg drop",
+    "forces and motion",
+    "energy absorption",
+    "iteration",
+    "building challenge",
+    "STEM",
+    "hands-on"
+  ],
+  "wowFactor": 5
+}

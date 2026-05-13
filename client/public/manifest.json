@@ -1,0 +1,13 @@
+{
+  "name": "LabBuddy — AI Learning Copilot",
+  "short_name": "LabBuddy",
+  "description": "Hands-on learning for curious kids",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F9FF",
+  "theme_color": "#6C63FF",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

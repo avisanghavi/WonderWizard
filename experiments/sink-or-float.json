@@ -1,0 +1,159 @@
+{
+  "id": "exp-002",
+  "title": "Sink or Float Sorting Lab",
+  "slug": "sink-or-float",
+  "description": "Predict whether everyday objects will sink or float, then test your predictions! Discover why some heavy things float and some light things sink by exploring density and buoyancy.",
+  "category": "physics",
+  "ageRange": { "min": 4, "max": 8 },
+  "gradeBand": "K-2",
+  "ngssStandard": "PS1.A",
+  "ngssDescription": "Structure and Properties of Matter: Different kinds of matter exist, and many of them can be either solid or liquid depending on temperature. Matter can be described and classified by its observable properties, including whether it sinks or floats in water.",
+  "safetyTier": "green",
+  "difficulty": "easy",
+  "durationMinutes": 15,
+  "estimatedCost": { "min": 3, "max": 5 },
+  "supplies": [
+    {
+      "item": "Large clear plastic tub or mixing bowl",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery",
+      "budgetAlternative": "Use a clean kitchen sink filled partway"
+    },
+    {
+      "item": "Apple",
+      "quantity": "1",
+      "estimatedPrice": 0.75,
+      "store": "grocery"
+    },
+    {
+      "item": "Orange (unpeeled)",
+      "quantity": "1",
+      "estimatedPrice": 0.60,
+      "store": "grocery"
+    },
+    {
+      "item": "Grape",
+      "quantity": "2-3",
+      "estimatedPrice": 0.25,
+      "store": "grocery"
+    },
+    {
+      "item": "Metal coin (quarter or penny)",
+      "quantity": "2",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Small wooden block or popsicle stick",
+      "quantity": "1",
+      "estimatedPrice": 0.50,
+      "store": "craft"
+    },
+    {
+      "item": "Piece of aluminum foil (flat and crumpled)",
+      "quantity": "2 sheets",
+      "estimatedPrice": 0.10,
+      "store": "grocery"
+    },
+    {
+      "item": "Plastic building brick (e.g., LEGO)",
+      "quantity": "1-2",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Small rubber ball or bouncy ball",
+      "quantity": "1",
+      "estimatedPrice": 1.0,
+      "store": "grocery",
+      "budgetAlternative": "Use a cork or small piece of sponge"
+    },
+    {
+      "item": "Paper clip",
+      "quantity": "2",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    },
+    {
+      "item": "Towel for drying",
+      "quantity": "1",
+      "estimatedPrice": 0.0,
+      "store": "grocery"
+    }
+  ],
+  "safetyNotes": [
+    "Use water at room temperature — not hot water.",
+    "Wipe up any spills immediately to prevent slipping.",
+    "Small objects like coins and paper clips can be choking hazards for very young children — adult supervision is required for children under 5.",
+    "Do not throw or splash water."
+  ],
+  "steps": [
+    {
+      "stepNumber": 1,
+      "instruction": "Fill the large plastic tub or bowl about three-quarters full with room temperature water. Place it on a table covered with a towel to catch drips.",
+      "tip": "A clear container is best so you can see objects at the bottom!",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 2,
+      "instruction": "Gather all your test objects and line them up next to the tub. For each object, make a prediction: will it sink or float? Draw two columns on a piece of paper labeled 'Sink' and 'Float' and write or draw each object in the column you predict.",
+      "scienceNote": "Making predictions before testing is a key part of the scientific method. Scientists call predictions 'hypotheses.'",
+      "durationMinutes": 3
+    },
+    {
+      "stepNumber": 3,
+      "instruction": "One at a time, gently place each object on the surface of the water. Watch carefully — does it sink to the bottom or float on top? Record your result next to your prediction.",
+      "tip": "Place objects gently on the water surface — do not drop or throw them in, as that could make even a floating object go under for a moment.",
+      "scienceNote": "An object floats if it is less dense than water. Density means how much stuff (mass) is packed into a certain amount of space (volume). A big light object can float while a small heavy object sinks.",
+      "durationMinutes": 5
+    },
+    {
+      "stepNumber": 4,
+      "instruction": "Now try something surprising: peel the orange and put it back in the water. What happens? Compare the peeled orange to the unpeeled one.",
+      "scienceNote": "The orange peel is full of tiny air pockets that make the whole orange less dense than water, so it floats. Without the peel, the fruit is denser than water and sinks! Air trapped inside objects can change whether they sink or float.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 5,
+      "instruction": "Take a flat sheet of aluminum foil and place it on the water (it should float). Now crumple another piece into a tight ball and drop it in. Compare what happens.",
+      "scienceNote": "The flat foil spreads its weight over a large area and traps air underneath, so it floats — like a boat! The crumpled ball is compact and denser, so it sinks. This is the same reason steel ships can float even though steel is heavier than water.",
+      "durationMinutes": 2
+    },
+    {
+      "stepNumber": 6,
+      "instruction": "Look at your prediction sheet. Count how many predictions were correct and how many surprised you. Talk about why some results were unexpected.",
+      "tip": "It is completely okay to have wrong predictions! Surprises are where the best learning happens in science.",
+      "durationMinutes": 1
+    }
+  ],
+  "reflectionPrompts": [
+    {
+      "question": "Was the biggest object always the one that sank? What does that tell you about the difference between how big something is and how heavy it is?",
+      "hint": "Think about the apple versus the coin. The apple is bigger but it floated, while the small coin sank. Size alone does not determine sinking or floating — it is about density."
+    },
+    {
+      "question": "Why did the unpeeled orange float but the peeled orange sink? What role does air play in floating?",
+      "hint": "The peel has lots of tiny air pockets. Air is much less dense than water, so it helps the orange float — like wearing a life jacket!"
+    },
+    {
+      "question": "If you wanted to make a sinking object float, what could you do? Can you think of a real-world example?",
+      "hint": "Think about the aluminum foil experiment. Changing the shape to trap air can help. Boats, life jackets, and pool floaties all use this idea."
+    }
+  ],
+  "nextExperiments": [
+    "erupting-volcano",
+    "water-cycle-in-a-bag",
+    "plant-growth-sunlight"
+  ],
+  "tags": [
+    "density",
+    "buoyancy",
+    "sink or float",
+    "properties of matter",
+    "predictions",
+    "household items",
+    "no mess"
+  ],
+  "wowFactor": 3
+}
