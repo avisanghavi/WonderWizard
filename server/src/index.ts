@@ -92,6 +92,23 @@ const upload = multer({
   },
 });
 
+// ---------- crash safety ----------
+//
+// Node 22 kills the process on any unhandled promise rejection. Catch them
+// at the top level so a fire-and-forget API call (rate-limit, image cache,
+// supabase background) doesn't take down the entire service.
+process.on("unhandledRejection", (reason, _promise) => {
+  console.error(
+    "[server] UnhandledRejection:",
+    reason instanceof Error
+      ? `${reason.message}\n${reason.stack}`
+      : JSON.stringify(reason, Object.getOwnPropertyNames(reason as object), 2),
+  );
+});
+process.on("uncaughtException", (err) => {
+  console.error("[server] UncaughtException:", err.message, err.stack);
+});
+
 // ---------- init ----------
 
 const app = express();
