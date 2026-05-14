@@ -1,7 +1,8 @@
 // LabBuddy — Chat endpoint handler
 // Orchestrates the AI copilot pipeline with database-backed sessions.
 
-import { Router, type Request, type Response } from "express";
+import { Router, type Response } from "express";
+import type { AuthRequest } from "./auth-middleware.js";
 import { randomUUID } from "node:crypto";
 import type {
   ChatRequest,
@@ -121,7 +122,7 @@ function applySafetyGate(blocks: ContentBlock[], childAge: number): ContentBlock
 
 export const chatRouter = Router();
 
-chatRouter.post("/", async (req: Request, res: Response) => {
+chatRouter.post("/", async (req: AuthRequest, res: Response) => {
   try {
     const body = req.body as ChatRequest;
 
@@ -135,7 +136,7 @@ chatRouter.post("/", async (req: Request, res: Response) => {
     // childId for gamification: use profile ID if provided, else fall back to sessionId
     const childId = body.childId || sessionId;
 
-    const session = getOrCreateSession(sessionId, childAge);
+    const session = getOrCreateSession(sessionId, childAge, req.parentId);
 
     // Resolve parent for notifications. childId may be a child_profile id
     // (signed-in) or an anonymous session id; only the former has a parent.

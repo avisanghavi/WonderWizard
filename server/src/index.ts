@@ -60,7 +60,11 @@ import { imageRouter } from "./image-handler.js";
 import { mockLabRouter } from "./mock-lab-handler.js";
 import { initDb } from "./db.js";
 import { getMessagesBySession } from "./repositories/message-repo.js";
-import { requireParentAuth } from "./auth-middleware.js";
+import {
+  getLatestSessionByParent,
+  listSessionsByParent,
+} from "./repositories/session-repo.js";
+import { requireParentAuth, type AuthRequest } from "./auth-middleware.js";
 import {
   chatBurstLimiter,
   chatHourlyLimiter,
@@ -235,6 +239,29 @@ app.use("/api/mysteries", requireParentAuth, mysteryRouter);
 // /render/:filename serves bytes from disk → no gate, cheap.
 app.use("/api/images/resolve", requireParentAuth, heavyAiLimiter, heavyAiDailyLimiter);
 app.use("/api/images", imageRouter);
+
+// Latest session for the authenticated parent. Returns { session: null }
+// when the user has no prior sessions yet (first login).
+app.get("/api/sessions/mine", requireParentAuth, (req: AuthRequest, res) => {
+  try {
+    const session = getLatestSessionByParent(req.parentId!);
+    res.json({ session: session ?? null });
+  } catch (err) {
+    console.error("Error fetching latest session:", err);
+    res.status(500).json({ error: "Failed to fetch session." });
+  }
+});
+
+// Full session list for the parent — for a future history sidebar.
+app.get("/api/sessions", requireParentAuth, (req: AuthRequest, res) => {
+  try {
+    const sessions = listSessionsByParent(req.parentId!);
+    res.json({ sessions });
+  } catch (err) {
+    console.error("Error listing sessions:", err);
+    res.status(500).json({ error: "Failed to list sessions." });
+  }
+});
 
 // Chat history endpoint
 app.get("/api/sessions/:sessionId/messages", requireParentAuth, (req, res) => {

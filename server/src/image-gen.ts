@@ -493,6 +493,24 @@ INSTRUCTIONAL RULES (NON-NEGOTIABLE):
 5. SPELLING MATTERS. Spell every label correctly. "CO₂" not "Coz", "Bottle" not "Botle".
 6. INCLUDE PARTS THE KID WILL ACTUALLY TOUCH. If they're going to pour, draw the pouring container. If they're going to mix, draw the mixing bowl. Reality first, decoration second.
 
+ANTI-ABSTRACTION RULES (READ TWICE — THIS IS WHERE PRIOR ATTEMPTS FAILED):
+A kid cannot identify a "coin" or an "LED" from a featureless colored square. If you find yourself drawing a generic rectangle for a physical object, STOP and draw the object's actual silhouette. A drawing that reduces everything to colored rectangles is a FAILED drawing, regardless of how well-labeled it is.
+
+VISUAL DICTIONARY — how recurring household / science objects must look:
+- Coin → a CIRCLE (never a square). Light gold/copper fill (#FFEAA7), dark outline, optional inner concentric circle to suggest a rim. Diameter 14-22px.
+- LED bulb → small dome shape: a circle for the bulb head + two short parallel vertical lines below as leads. Bulb fill 60% opacity (#4ECDC4 or #FF6B6B), dark outline. Total height ~28px.
+- Capacitor (electrolytic) → tall narrow cylinder: a vertical rectangle with rounded top + two parallel vertical leads protruding from the bottom. Add a horizontal stripe near the top for the polarity band. ~40px tall.
+- Battery → cylinder lying horizontally: long pill-shape rect with rx=8, with a SMALL nub on one short side (the positive terminal). Add "+/−" mini labels at the ends.
+- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Connect components end-to-end. Use right-angle bends, not blobs.
+- Bottle → tall rect (height ≈ 2.5× width), rounded corners, a short narrower rect on top for the neck, maybe a tiny cap rect.
+- Cup / beaker → trapezoid (wider at top) OR a rect with a slight curve at the bottom. Show liquid inside as a partial fill.
+- Paper → a flat rectangle outlined with a slight fold-corner triangle in one corner. Keep it thin (height < 30px).
+- Coin / button cell / round battery → circle. Always.
+- Magnet → horseshoe shape (filled U with rounded inner edge) OR a bar rect with N/S labels at the ends.
+- Hand / pouring motion → simple paw-like shape OR an arrow from the source container into the target.
+
+WHEN UNSURE: a recognizable cartoon-style drawing beats a "clean abstract icon." Add details (a rim on a coin, leads on an LED, a neck on a bottle) even if they take extra <line> elements.
+
 LABEL GROUPING (CRITICAL FOR THE PIPELINE):
 - Wrap EACH label-plus-leader pair in a <g class="label">…</g> group.
 - The group contains EXACTLY one <text> and any <line>/<path> elements that form the leader line pointing at the labeled part.
@@ -773,6 +791,23 @@ CROSS-STEP CONSISTENCY (CRITICAL):
 - The cumulative state must build across steps: step 1 shows the starting setup; step 2 shows the result of step 1 plus the action of step 2; etc.
 - A kid scrolling through all the SVGs should feel like one stop-motion sequence, NOT like five separate drawings.
 
+ANTI-ABSTRACTION (THE #1 FAILURE MODE — READ TWICE):
+A kid cannot identify a "coin" or an "LED" from a featureless colored square. If your instinct is to draw a labeled colored rectangle for a physical object, STOP and draw the actual silhouette of that object instead. A guide where every component is a colored box is a FAILED guide regardless of how clean the labels are.
+
+VISUAL DICTIONARY — recurring objects must look like THIS, not like generic rectangles:
+- Coin → a CIRCLE (never a square). Light gold/copper fill, dark outline, optional inner concentric circle for rim. 14-22px diameter.
+- LED bulb → small dome: a circle for the bulb head + two short parallel vertical lines below as leads. Bulb fill 60% opacity. Total height ~28px.
+- Capacitor (electrolytic) → tall narrow cylinder: vertical rect with rounded top + two parallel vertical leads protruding from the bottom + a polarity stripe near the top. ~40px tall.
+- Battery → horizontal cylinder: long pill-shape rect with rx=8, with a small nub on one end (positive terminal). Optional "+/−" mini labels.
+- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Right-angle bends, not blobs.
+- Bottle → tall rect (height ≈ 2.5× width), rounded corners, short narrow neck on top, maybe a cap.
+- Cup / beaker → trapezoid (wider at top) OR rect with curved base. Liquid inside shown as partial fill.
+- Paper → flat rect with a small fold-corner triangle. Keep thin.
+- Magnet → horseshoe shape (filled U) OR a bar rect with N/S labels.
+- Hand / pour → simple arrow from source to target, or a stylized hand silhouette.
+
+A recognizable cartoon-style drawing ALWAYS beats a "clean abstract icon." Add details (rim on coin, leads on LED, neck on bottle) even if it costs a few extra <line>/<circle> elements.
+
 STYLE BIBLE (same as a single-shot diagram):
 - viewBox="0 0 ${viewBoxW} ${viewBoxH}" for every SVG
 - Palette ONLY: #6C63FF, #4ECDC4, #FF6B6B, #FFEAA7, #FFF6E5 (cream bg), #2D3436 (outlines / labels)
@@ -791,20 +826,35 @@ LAYOUT (same in every step):
 - NEVER place labels inside the diagram zone
 - NEVER add scenery (trees, houses, animals, etc.)
 
-EXAMPLE OF ONE WELL-FORMED STEP SVG (style anchor):
+EXAMPLE OF ONE WELL-FORMED STEP SVG (notice the LED has a dome+leads, the coin is a real circle, the battery has a terminal nub — NONE of them are featureless rectangles):
 <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
   <rect width="320" height="240" fill="#FFF6E5"/>
   <circle cx="22" cy="22" r="14" fill="#6C63FF"/>
-  <text x="22" y="26" font-family="sans-serif" font-size="14" font-weight="700" fill="#FFF6E5" text-anchor="middle">1</text>
-  <ellipse cx="160" cy="180" rx="68" ry="14" fill="#4ECDC4" stroke="#2D3436" stroke-width="2"/>
-  <rect x="142" y="110" width="36" height="64" rx="6" fill="#FFF6E5" stroke="#2D3436" stroke-width="2.5"/>
+  <text x="22" y="26" font-family="sans-serif" font-size="14" font-weight="700" fill="#FFF6E5" text-anchor="middle">2</text>
+  <!-- Battery (horizontal pill with positive nub) -->
+  <rect x="100" y="110" width="80" height="28" rx="8" fill="#FFEAA7" stroke="#2D3436" stroke-width="2.5"/>
+  <rect x="180" y="118" width="6" height="12" fill="#2D3436"/>
+  <!-- Wires from battery to LED -->
+  <path d="M 100 124 L 80 124 L 80 90 L 200 90" stroke="#2D3436" stroke-width="2.5" fill="none"/>
+  <path d="M 186 124 L 210 124 L 210 140" stroke="#2D3436" stroke-width="2.5" fill="none"/>
+  <!-- LED: dome + two leads -->
+  <circle cx="205" cy="84" r="9" fill="#FF6B6B" stroke="#2D3436" stroke-width="2" fill-opacity="0.6"/>
+  <line x1="201" y1="92" x2="201" y2="100" stroke="#2D3436" stroke-width="2"/>
+  <line x1="209" y1="92" x2="209" y2="100" stroke="#2D3436" stroke-width="2"/>
+  <!-- Coin: a real circle, not a square -->
+  <circle cx="210" cy="160" r="11" fill="#FFEAA7" stroke="#2D3436" stroke-width="2"/>
+  <circle cx="210" cy="160" r="7" fill="none" stroke="#2D3436" stroke-width="1"/>
   <g class="label">
-    <line x1="85" y1="120" x2="140" y2="138" stroke="#2D3436" stroke-width="2"/>
-    <text x="80" y="118" font-family="sans-serif" font-size="12" fill="#2D3436" text-anchor="end">Plastic bottle</text>
+    <line x1="78" y1="124" x2="100" y2="124" stroke="#2D3436" stroke-width="2"/>
+    <text x="73" y="122" font-family="sans-serif" font-size="12" fill="#2D3436" text-anchor="end">Battery</text>
   </g>
   <g class="label">
-    <line x1="240" y1="178" x2="222" y2="180" stroke="#2D3436" stroke-width="2"/>
-    <text x="245" y="182" font-family="sans-serif" font-size="12" fill="#2D3436" text-anchor="start">Baking tray</text>
+    <line x1="240" y1="84" x2="215" y2="84" stroke="#2D3436" stroke-width="2"/>
+    <text x="245" y="86" font-family="sans-serif" font-size="12" fill="#2D3436" text-anchor="start">LED bulb</text>
+  </g>
+  <g class="label">
+    <line x1="240" y1="160" x2="222" y2="160" stroke="#2D3436" stroke-width="2"/>
+    <text x="245" y="162" font-family="sans-serif" font-size="12" fill="#2D3436" text-anchor="start">Coin</text>
   </g>
 </svg>
 

@@ -2,7 +2,8 @@
 // Accepts syllabus files, sends them to Claude for structured parsing,
 // and stores parsed curricula in the database.
 
-import { Router, type Request, type Response } from "express";
+import { Router, type Response } from "express";
+import type { AuthRequest } from "./auth-middleware.js";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -332,7 +333,7 @@ function getDemoParsedSyllabus(): {
 export const syllabusRouter = Router();
 
 // POST /api/syllabus/upload — upload and parse a syllabus
-syllabusRouter.post("/upload", async (req: Request, res: Response) => {
+syllabusRouter.post("/upload", async (req: AuthRequest, res: Response) => {
   try {
     const file = req.file;
     if (!file) {
@@ -359,7 +360,7 @@ syllabusRouter.post("/upload", async (req: Request, res: Response) => {
     }
 
     // Get or create the session (auto-create if the user uploads before chatting)
-    const session = getOrCreateSession(sessionId, 10);
+    const session = getOrCreateSession(sessionId, 10, req.parentId);
 
     // Parse with Claude
     let result: { parsed: Omit<ParsedSyllabus, "id" | "uploadedAt">; suggestedActivities: string[] };
@@ -402,7 +403,7 @@ syllabusRouter.post("/upload", async (req: Request, res: Response) => {
 });
 
 // GET /api/syllabus/:sessionId — get all syllabi for a session
-syllabusRouter.get("/:sessionId", (req: Request, res: Response) => {
+syllabusRouter.get("/:sessionId", (req: AuthRequest, res: Response) => {
   const session = getSession(req.params.sessionId);
   if (!session) {
     res.status(404).json({ error: "Session not found." });
@@ -415,7 +416,7 @@ syllabusRouter.get("/:sessionId", (req: Request, res: Response) => {
 });
 
 // DELETE /api/syllabus/:sessionId/:syllabusId — remove a syllabus
-syllabusRouter.delete("/:sessionId/:syllabusId", (req: Request, res: Response) => {
+syllabusRouter.delete("/:sessionId/:syllabusId", (req: AuthRequest, res: Response) => {
   const session = getSession(req.params.sessionId);
   if (!session) {
     res.status(404).json({ error: "Session not found." });

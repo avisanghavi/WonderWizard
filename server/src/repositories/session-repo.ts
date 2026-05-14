@@ -36,15 +36,16 @@ export function getSession(id: string): LabSession | undefined {
   return session;
 }
 
-export function createSession(session: LabSession): void {
+export function createSession(session: LabSession, parentId?: string): void {
   const db = getDb();
   const now = Date.now();
   db.prepare(
-    `INSERT INTO sessions (id, child_age, phase, current_step, current_experiment, active_syllabus_id, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO sessions (id, child_age, parent_id, phase, current_step, current_experiment, active_syllabus_id, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   ).run(
     session.id,
     session.childAge,
+    parentId ?? null,
     session.phase,
     session.currentStep,
     session.currentExperiment ? JSON.stringify(session.currentExperiment) : null,
@@ -71,7 +72,11 @@ export function updateSession(session: LabSession): void {
   );
 }
 
-export function getOrCreateSession(sessionId: string, childAge: number): LabSession {
+export function getOrCreateSession(
+  sessionId: string,
+  childAge: number,
+  parentId?: string,
+): LabSession {
   let session = getSession(sessionId);
   if (!session) {
     session = {
@@ -81,11 +86,45 @@ export function getOrCreateSession(sessionId: string, childAge: number): LabSess
       phase: "exploring",
       syllabi: [],
     };
-    createSession(session);
+    createSession(session, parentId);
+  } else if (parentId) {
+    // Backfill parent_id if the row was created anonymously and the user has
+    // since signed in. Only sets it if currently NULL — never overwrites.
+    const db = getDb();
+    db.prepare(
+      "UPDATE sessions SET parent_id = COALESCE(parent_id, ?) WHERE id = ?",
+    ).run(parentId, sessionId);
   }
-  // Ensure syllabi array is initialized
-  if (!session.syllabi) {
-    session.syllabi = [];
-  }
+  if (!session.syllabi) session.syllabi = [];
   return session;
+}
+
+/**
+ * Returns the most recently-updated session for a given parent, or undefined
+ * if they have no sessions yet. Used by the client on login to auto-restore
+ * the kid's last conversation + syllabi.
+ */
+export function getLatestSessionByParent(parentId: string): LabSession | undefined {
+  const db = getDb();
+  const row = db
+    .prepare(
+      "SELECT id FROM sessions WHERE parent_id = ? ORDER BY updated_at DESC LIMIT 1",
+    )
+    .get(parentId) as { id: string } | undefined;
+  if (!row) return undefined;
+  return getSession(row.id);
+}
+
+/**
+ * List all sessions owned by a parent, most recent first. For a future
+ * ChatGPT-style sidebar — not used by the MVP auto-restore.
+ */
+export function listSessionsByParent(parentId: string): Array<{ id: string; updatedAt: number; createdAt: number }> {
+  const db = getDb();
+  const rows = db
+    .prepare(
+      "SELECT id, created_at, updated_at FROM sessions WHERE parent_id = ? ORDER BY updated_at DESC",
+    )
+    .all(parentId) as Array<{ id: string; created_at: number; updated_at: number }>;
+  return rows.map((r) => ({ id: r.id, createdAt: r.created_at, updatedAt: r.updated_at }));
 }

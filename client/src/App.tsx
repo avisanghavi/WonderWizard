@@ -35,6 +35,15 @@ function MainApp() {
   const [authStatus, setAuthStatus] = useState<'loading' | 'in' | 'out'>('loading');
   const [authMode, setAuthMode] = useState<'signup' | 'login'>('login');
 
+  // Session restored from the server after sign-in. While null, ChatView
+  // generates its own fresh sessionId. While a string, ChatView adopts it
+  // and loads prior messages + syllabi.
+  const [restoredSessionId, setRestoredSessionId] = useState<string | null>(null);
+  // `restoreReady` flips true after we've checked the server for a prior
+  // session (or determined this is a fresh user). Until then we hold off on
+  // mounting ChatView so we don't flash a fresh session before restoring.
+  const [restoreReady, setRestoreReady] = useState(false);
+
   useEffect(() => {
     // Hydrate session once on mount.
     supabase.auth.getSession().then(({ data }) => {
@@ -43,9 +52,42 @@ function MainApp() {
     // Then subscribe to auth state changes (login, logout, refresh).
     const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
       setAuthStatus(session ? 'in' : 'out');
+      if (!session) {
+        // Logged out — clear any restored session so a future login starts fresh.
+        setRestoredSessionId(null);
+        setRestoreReady(false);
+      }
     });
     return () => sub.subscription.unsubscribe();
   }, []);
+
+  // Once signed in, ask the server for the parent's most recent session
+  // (auto-restore "ChatGPT-style"). If they have one, ChatView adopts that
+  // sessionId and pulls history. If not, restoreReady still flips so we
+  // mount ChatView with a fresh sessionId.
+  useEffect(() => {
+    if (authStatus !== 'in') return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/sessions/mine');
+        if (!res.ok) {
+          if (!cancelled) setRestoreReady(true);
+          return;
+        }
+        const data = await res.json();
+        if (cancelled) return;
+        const id = (data?.session?.id as string | undefined) ?? null;
+        if (id) setRestoredSessionId(id);
+        setRestoreReady(true);
+      } catch {
+        if (!cancelled) setRestoreReady(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [authStatus]);
 
   const parentAuthed = authStatus === 'in';
 
@@ -285,6 +327,22 @@ function MainApp() {
             ))}
           </div>
         </div>
+      ) : !restoreReady ? (
+        // Briefly show nothing while we ask the server whether the user has
+        // a prior session to restore. Avoids flashing a fresh chat then
+        // replacing it with restored history.
+        <div
+          style={{
+            minHeight: 'calc(100vh - 100px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            opacity: 0.7,
+          }}
+        >
+          Loading your lab…
+        </div>
       ) : (
         <>
           {/* Keep ChatView always mounted so it preserves state; hide via CSS */}
@@ -292,6 +350,7 @@ function MainApp() {
             <ChatView
               childAge={childAge}
               initialMessage={initialMessage}
+              initialSessionId={restoredSessionId ?? undefined}
               onSyllabiChange={handleSyllabiChange}
               onOpenCurriculumMap={syllabi.length > 0 ? handleOpenCurriculumMap : undefined}
               onOpenDIYGuide={handleOpenDIYGuide}

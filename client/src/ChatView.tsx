@@ -41,22 +41,51 @@ const WELCOME_MESSAGES: ChatMessage[] = [
 interface ChatViewProps {
   childAge: number;
   initialMessage?: string;
+  /**
+   * If provided (server-restored after login), this sessionId is used instead
+   * of generating a fresh one. ChatView will then pull prior messages +
+   * syllabi for that session so the kid sees their history.
+   */
+  initialSessionId?: string;
   onSyllabiChange?: (syllabi: ParsedSyllabus[]) => void;
   onOpenCurriculumMap?: () => void;
   onOpenDIYGuide?: (guide: DIYGuide) => void;
   childId?: string;
 }
 
-export default function ChatView({ childAge, initialMessage, onSyllabiChange, onOpenCurriculumMap, onOpenDIYGuide, childId }: ChatViewProps) {
+export default function ChatView({ childAge, initialMessage, initialSessionId, onSyllabiChange, onOpenCurriculumMap, onOpenDIYGuide, childId }: ChatViewProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(WELCOME_MESSAGES);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [syllabi, setSyllabi] = useState<ParsedSyllabus[]>([]);
   const [showSyllabusUpload, setShowSyllabusUpload] = useState(false);
-  const sessionIdRef = useRef(generateId());
+  const sessionIdRef = useRef(initialSessionId ?? generateId());
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastInitialMessageRef = useRef<string | undefined>(undefined);
+
+  // Restore prior chat history when we adopted an existing session.
+  // Only runs once on mount — switching sessionId mid-session isn't supported yet.
+  useEffect(() => {
+    if (!initialSessionId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/sessions/${initialSessionId}/messages`);
+        if (!res.ok) return;
+        const data = await res.json();
+        const prior = Array.isArray(data.messages) ? (data.messages as ChatMessage[]) : [];
+        if (cancelled || prior.length === 0) return;
+        // Replace welcome with the actual history so the user sees their prior conversation.
+        setMessages(prior);
+      } catch {
+        // History fetch failure is non-fatal — keep welcome messages.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialSessionId]);
 
   const scrollToBottom = useCallback(() => {
     requestAnimationFrame(() => {

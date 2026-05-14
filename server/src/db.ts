@@ -101,6 +101,7 @@ const TABLES: TableSpec[] = [
         id TEXT PRIMARY KEY,
         child_age INTEGER NOT NULL,
         child_id TEXT,
+        parent_id TEXT,
         phase TEXT NOT NULL DEFAULT 'exploring',
         current_step INTEGER NOT NULL DEFAULT 0,
         current_experiment TEXT,
@@ -111,7 +112,11 @@ const TABLES: TableSpec[] = [
     `,
     // sessions are deliberately FK-less because anonymous (pre-signup) sessions
     // are valid — child_id may be a profile id OR an anonymous session id.
-    fkSignatures: ["child_id"],
+    // parent_id (when set) is the Supabase auth.users.id for the signed-in parent.
+    fkSignatures: ["parent_id"],
+    indexes: [
+      "CREATE INDEX IF NOT EXISTS idx_sessions_parent ON sessions(parent_id, updated_at);",
+    ],
   },
   {
     name: "chat_messages",

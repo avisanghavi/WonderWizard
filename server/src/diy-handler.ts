@@ -6,6 +6,7 @@
 // same cached image — huge cost savings on common topics.
 
 import { Router } from "express";
+import type { AuthRequest } from "./auth-middleware.js";
 import { getDb } from "./db.js";
 import type {
   GeneratedExperiment,
@@ -129,7 +130,7 @@ function stepImagePrompt(
 
 // ---------- POST /generate ----------
 
-diyRouter.post("/generate", async (req, res) => {
+diyRouter.post("/generate", async (req: AuthRequest, res) => {
   try {
     const { experiment, sessionId, polish } = req.body as {
       experiment: GeneratedExperiment;
@@ -152,7 +153,7 @@ diyRouter.post("/generate", async (req, res) => {
 
     // Ensure the parent session row exists so the FK on diy_guides resolves.
     // Defaults to age 10 if we don't know — chat-handler updates it later.
-    getOrCreateSession(sessionId, 10);
+    getOrCreateSession(sessionId, 10, req.parentId);
 
     const id = generateId();
     const generatedAt = Date.now();
