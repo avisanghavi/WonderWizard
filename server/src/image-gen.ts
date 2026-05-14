@@ -819,18 +819,36 @@ ANTI-ABSTRACTION (THE #1 FAILURE MODE — READ TWICE):
 A kid cannot identify a "coin" or an "LED" from a featureless colored square. If your instinct is to draw a labeled colored rectangle for a physical object, STOP and draw the actual silhouette of that object instead. A guide where every component is a colored box is a FAILED guide regardless of how clean the labels are.
 
 VISUAL DICTIONARY — recurring objects must look like THIS, not like generic rectangles:
-- Coin → a CIRCLE (never a square). Light gold/copper fill, dark outline, optional inner concentric circle for rim. 14-22px diameter.
-- LED bulb → small dome: a circle for the bulb head + two short parallel vertical lines below as leads. Bulb fill 60% opacity. Total height ~28px.
-- Capacitor (electrolytic) → tall narrow cylinder: vertical rect with rounded top + two parallel vertical leads protruding from the bottom + a polarity stripe near the top. ~40px tall.
-- Battery → horizontal cylinder: long pill-shape rect with rx=8, with a small nub on one end (positive terminal). Optional "+/−" mini labels.
-- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Right-angle bends, not blobs.
-- Bottle → tall rect (height ≈ 2.5× width), rounded corners, short narrow neck on top, maybe a cap.
-- Cup / beaker → trapezoid (wider at top) OR rect with curved base. Liquid inside shown as partial fill.
-- Paper → flat rect with a small fold-corner triangle. Keep thin.
-- Magnet → horseshoe shape (filled U) OR a bar rect with N/S labels.
-- Hand / pour → simple arrow from source to target, or a stylized hand silhouette.
 
-A recognizable cartoon-style drawing ALWAYS beats a "clean abstract icon." Add details (rim on coin, leads on LED, neck on bottle) even if it costs a few extra <line>/<circle> elements.
+Electronics
+- Coin → a CIRCLE (never a square). Light gold/copper fill, dark outline, optional inner ring for rim. 14-22px diameter.
+- LED bulb → small dome: circle for the bulb head + two short parallel vertical leads. Bulb fill 60% opacity. ~28px tall.
+- Capacitor → tall narrow cylinder: vertical rect with rounded top + two vertical leads + polarity stripe near top. ~40px tall.
+- Battery → horizontal pill-shape rect with rx=8, with a small nub on one end (positive terminal). Optional "+/−" labels.
+- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Right-angle bends.
+
+Containers / kitchen
+- Bottle → tall rect (height ≈ 2.5× width), rounded, with a short narrow neck on top.
+- Cup / beaker → trapezoid (wider at top) OR rect with curved base. Liquid shown as partial fill.
+- Paper → flat rect with a tiny fold-corner triangle. Keep thin (<30px tall).
+- Magnet → horseshoe shape OR a bar rect with N/S labels.
+
+Crafts / "build it from household stuff" projects (THIS IS WHERE THE MODEL FAILS MOST)
+- Shoebox guitar → OPEN rectangular box in 3/4 perspective with rubber bands stretched ACROSS THE OPENING (taut horizontal lines, NOT squiggles, NOT inside the closed box) and a pencil laid perpendicular as the bridge. Bands are taut = STRAIGHT.
+- Rubber band → single thin STRAIGHT line between two anchor points (or two close parallel lines for thick bands). Never curly.
+- Cardboard box → 3/4 perspective: front face rect + top trapezoid + side parallelogram. Open box = darker interior.
+- Pencil → thin rect with a triangular graphite tip and small eraser rect on the other end.
+- Straw → thin tall rect with rounded ends. Bent straws have two segments meeting at an angle.
+- String / thread → very thin curved <path>, light gray, attached to specific anchors.
+- Marble / ball → circle with an off-center inner highlight circle.
+- Ramp / inclined plane → right triangle.
+
+Data displays / charts (CRITICAL — when a step says "make a chart," draw a USABLE TABLE)
+- Data table → grid with a HEADER ROW (slightly darker fill) showing actual column names from the description, and 2-4 sample rows below. Column names sit INSIDE the header row, NOT as floating labels. E.g. for "string length vs pitch": header [Length | Pitch], rows [10 cm | high], [20 cm | med], [30 cm | low].
+- Graph / plot → labeled X/Y axes with tick marks; data shown as dots or a line. Origin "0" labeled.
+- Number line → horizontal line with evenly-spaced ticks and numeric labels.
+
+A recognizable cartoon-style drawing ALWAYS beats a "clean abstract icon." If you can't tell what a named supply looks like, draw it AS the literal household object the name suggests ("shoebox guitar" = literal shoebox with bands on top, not a stylized guitar shape).
 
 STYLE BIBLE (same as a single-shot diagram):
 - viewBox="0 0 ${viewBoxW} ${viewBoxH}" for every SVG
@@ -847,8 +865,10 @@ LAYOUT (same in every step):
 - RIGHT label zone: x ∈ [${Math.round(viewBoxW * 0.72)}, ${viewBoxW - 4}]
 - Stack labels vertically with ≥22px spacing
 - NEVER let leader lines cross each other
+- NEVER let one label's text physically overlap another label's text or another label's leader line (treat each label as a 22px-tall box that cannot intersect any other label's box)
 - NEVER place labels inside the diagram zone
 - NEVER add scenery (trees, houses, animals, etc.)
+- NEVER draw a featureless colored rectangle in place of a named real-world object — re-read the VISUAL DICTIONARY above
 
 EXAMPLE OF ONE WELL-FORMED STEP SVG (notice the LED has a dome+leads, the coin is a real circle, the battery has a terminal nub — NONE of them are featureless rectangles):
 <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
