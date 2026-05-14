@@ -6,3 +6,7 @@ dist/
 .DS_Store
 server/data/
 data/
+# But DO ship the hand-curated stock supply images so they're in the Docker
+# build context — these are bundled with the app, not user data.
+!server/data/stock-images/
+!server/data/stock-images/**

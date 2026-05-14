@@ -5,6 +5,9 @@ node_modules
 **/.env.local
 data
 server/data
+# Ship the curated stock supply images in the Docker context
+!server/data/stock-images
+!server/data/stock-images/**
 .git
 .DS_Store
 *.log
