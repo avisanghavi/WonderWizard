@@ -497,19 +497,41 @@ ANTI-ABSTRACTION RULES (READ TWICE — THIS IS WHERE PRIOR ATTEMPTS FAILED):
 A kid cannot identify a "coin" or an "LED" from a featureless colored square. If you find yourself drawing a generic rectangle for a physical object, STOP and draw the object's actual silhouette. A drawing that reduces everything to colored rectangles is a FAILED drawing, regardless of how well-labeled it is.
 
 VISUAL DICTIONARY — how recurring household / science objects must look:
+
+Electronics
 - Coin → a CIRCLE (never a square). Light gold/copper fill (#FFEAA7), dark outline, optional inner concentric circle to suggest a rim. Diameter 14-22px.
 - LED bulb → small dome shape: a circle for the bulb head + two short parallel vertical lines below as leads. Bulb fill 60% opacity (#4ECDC4 or #FF6B6B), dark outline. Total height ~28px.
 - Capacitor (electrolytic) → tall narrow cylinder: a vertical rectangle with rounded top + two parallel vertical leads protruding from the bottom. Add a horizontal stripe near the top for the polarity band. ~40px tall.
-- Battery → cylinder lying horizontally: long pill-shape rect with rx=8, with a SMALL nub on one short side (the positive terminal). Add "+/−" mini labels at the ends.
-- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Connect components end-to-end. Use right-angle bends, not blobs.
+- Battery → horizontal cylinder: long pill-shape rect with rx=8, with a SMALL nub on one short side (positive terminal). Optional "+/−" labels.
+- Wire → thin curved or zig-zag <path> with stroke 2.5, no fill. Right-angle bends.
+
+Containers / kitchen
 - Bottle → tall rect (height ≈ 2.5× width), rounded corners, a short narrower rect on top for the neck, maybe a tiny cap rect.
 - Cup / beaker → trapezoid (wider at top) OR a rect with a slight curve at the bottom. Show liquid inside as a partial fill.
+- Bowl → wide shallow ellipse / half-ellipse from a side view.
 - Paper → a flat rectangle outlined with a slight fold-corner triangle in one corner. Keep it thin (height < 30px).
-- Coin / button cell / round battery → circle. Always.
 - Magnet → horseshoe shape (filled U with rounded inner edge) OR a bar rect with N/S labels at the ends.
-- Hand / pouring motion → simple paw-like shape OR an arrow from the source container into the target.
 
-WHEN UNSURE: a recognizable cartoon-style drawing beats a "clean abstract icon." Add details (a rim on a coin, leads on an LED, a neck on a bottle) even if they take extra <line> elements.
+Crafts / build-from-stuff projects (CRITICAL — these get drawn wrong most often)
+- Shoebox guitar → an OPEN rectangular box drawn in 3/4 perspective with rubber bands stretched ACROSS THE OPENING (taut horizontal lines, not squiggles, not inside the box). A pencil/dowel laid PERPENDICULAR across the bands acts as the bridge. Label rubber bands by thickness/color if multiple.
+- Rubber band (stretched) → a single thin straight line (or two close parallel lines for thick bands) between two anchor points. NEVER curly/squiggly — taut means STRAIGHT.
+- Cardboard box → 3/4 perspective: front face rect + top trapezoid + side parallelogram for visible depth. Open box = darker fill inside the opening.
+- Pencil → thin rect with a triangular tip on one end (graphite) and optionally a smaller rect at the other end (eraser).
+- Straw → thin tall rectangle with rounded top/bottom; if bent, draw the bent silhouette with two segments meeting at an angle.
+- String / thread → single very thin curved <path>, light gray, attached to specific anchor points.
+- Marble / ball → simple circle with a smaller off-center inner circle for a highlight.
+- Ramp / inclined plane → right triangle, hypotenuse on top, base on the ground.
+
+Data displays / charts (CRITICAL — when the step says "make a chart," draw a USABLE TABLE)
+- Data table / chart → a proper grid with a HEADER ROW (slightly darker fill) showing the actual column names from the description, and 2-4 example rows beneath with sample values. Outline cells. Column names sit INSIDE the header row, not as floating labels. E.g. for "string length vs pitch": header = ["Length", "Pitch"], rows = ["10 cm", "high"], ["20 cm", "med"], ["30 cm", "low"].
+- Graph / plot → labeled axes (X and Y) with a tick mark or two, and the data plotted as either dots or a line. Origin labeled "0".
+- Number line → horizontal line with evenly-spaced tick marks and numeric labels.
+
+Motion & instructions
+- Hand / pouring motion → simple silhouette OR an arrow from the source container into the target.
+- Arrow → narrow stroke with a small triangle head. Show direction of motion or sequence.
+
+WHEN UNSURE: a recognizable cartoon-style drawing beats a "clean abstract icon." Add details (rim on a coin, leads on an LED, taut bands on a shoebox guitar, header row on a chart) even if they take extra <line>/<circle>/<rect> elements. If you can't tell what a named supply looks like from your training data, draw it AS the literal household item the name suggests (e.g. "shoebox guitar" = a shoebox with rubber bands on top).
 
 LABEL GROUPING (CRITICAL FOR THE PIPELINE):
 - Wrap EACH label-plus-leader pair in a <g class="label">…</g> group.
@@ -560,6 +582,8 @@ OUTLAWED:
 - NO floating labels with no leader line
 - NO leader lines that cross another leader line
 - NO labels placed inside the diagram zone
+- NO label text overlapping another label's text or another label's leader line (treat each label as a 22px-tall box that can't visually intersect any other label's box)
+- NO featureless colored rectangles standing in for named physical objects (re-read the VISUAL DICTIONARY section above)
 
 OUTPUT RULES:
 - Return ONLY the SVG markup, starting with <svg and ending with </svg>
