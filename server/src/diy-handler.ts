@@ -15,6 +15,7 @@ import type {
 } from "../../shared/types.js";
 import { resolveSchematic } from "./image-cache.js";
 import { generateMultiStepSvgs } from "./image-gen.js";
+import { findStockImage } from "./stock-images.js";
 import { getOrCreateSession } from "./repositories/session-repo.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -175,62 +176,53 @@ diyRouter.post("/generate", async (req: AuthRequest, res) => {
       containerHints.test(s.item)
     )?.item;
 
-    let stepIllustrations: string[] = [];
+    // Per-step illustrations:
+    //   1. If the step references EXACTLY ONE supply that matches a stock
+    //      image (server/data/stock-images/), use that — zero cost, perfect.
+    //   2. Otherwise, generate via Recraft v3 → GPT Image 1 → Claude SVG.
+    //
+    // The multi-step Claude-SVG fast path was removed — it produced abstract
+    // icon-soup. Real image models know what a shoebox guitar looks like;
+    // Claude only knows how to draw rectangles.
+    void mainContainer;
 
-    if (!polish) {
-      const multi = await generateMultiStepSvgs({
-        experimentTitle: experiment.title,
-        experimentCategory: experiment.category,
-        supplies: experiment.supplies.map((s) => ({
-          item: s.item,
-          quantity: s.quantity,
-        })),
-        steps: experiment.steps.map((step, i) => ({
-          stepNumber: i + 1,
-          description: stepImagePrompt(experiment, step, i),
-        })),
-        aspect: "landscape",
-        mainContainer,
-      });
-
-      if (multi && multi.dataUris.every((u) => u.length > 0)) {
-        // Persist each data URI as a cache file so the existing
-        // /api/images/render/:hash route serves it. Hash includes the
-        // experiment title + step number so repeat runs of the same guide
-        // produce the same URLs.
-        stepIllustrations = multi.dataUris.map((uri, i) =>
-          persistDataUriToCache(uri, `${experiment.title}::${i}::v1::${multi.violationsPerStep[i]}`)
-        );
-        const totalViolations = multi.violationsPerStep.reduce(
-          (a, b) => a + Math.max(0, b),
-          0
-        );
-        console.log(
-          `[diy] multi-step OK — ${multi.dataUris.length} SVGs, ${totalViolations} residual layout violations`
-        );
-      } else {
-        console.warn("[diy] multi-step failed, falling back to per-step fan-out");
-      }
+    function findStockMatchForStep(step: ExperimentStep, allSupplies: typeof experiment.supplies): string | null {
+      // Try the supplies mentioned in this step's instruction text. If exactly
+      // one matches the stock library, prefer it.
+      const text = step.instruction.toLowerCase();
+      const mentioned = allSupplies.filter((s) => text.includes(s.item.toLowerCase()));
+      const candidates = mentioned.length > 0 ? mentioned : allSupplies;
+      const stockHits = candidates
+        .map((s) => findStockImage(s.item))
+        .filter((x): x is NonNullable<typeof x> => !!x);
+      // Only use a stock image if we got a single unambiguous match — multiple
+      // matches would need a composite we don't try to render here.
+      return stockHits.length === 1 ? stockHits[0].url : null;
     }
 
-    if (stepIllustrations.length === 0) {
-      const stepResults = await Promise.all(
-        experiment.steps.map((step, i) =>
-          resolveSchematic({
+    const stepResults = await Promise.all(
+      experiment.steps.map(async (step, i) => {
+        const stockUrl = findStockMatchForStep(step, experiment.supplies);
+        if (stockUrl) {
+          console.log(`[diy] step ${i} using stock image: ${stockUrl}`);
+          return { url: stockUrl };
+        }
+        try {
+          return await resolveSchematic({
             description: stepImagePrompt(experiment, step, i),
-            style: "schematic",
+            style: "illustration",
             aspect: "landscape",
             polish: polish === true,
-          }).catch((err) => {
-            console.error(`[diy] step ${i} schematic failed:`, err);
-            return null;
-          })
-        )
-      );
-      stepIllustrations = stepResults.map((entry, i) =>
-        entry ? entry.url : `/api/images/placeholder?i=${i}`
-      );
-    }
+          });
+        } catch (err) {
+          console.error(`[diy] step ${i} schematic failed:`, err);
+          return null;
+        }
+      })
+    );
+    const stepIllustrations: string[] = stepResults.map((entry, i) =>
+      entry ? entry.url : `/api/images/placeholder?i=${i}`
+    );
 
     // Persist
     const db = getDb();

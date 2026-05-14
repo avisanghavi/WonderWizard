@@ -78,20 +78,16 @@ export async function generateSchematic(opts: GenerateOpts): Promise<GenerateRes
     console.warn("[image-gen] polish pipeline failed, falling back to single-stage");
   }
 
-  const style = opts.style ?? "schematic";
+  // Always prefer real image-gen models first — they actually know what
+  // physical objects look like (a shoebox guitar, a paper cup, a magnet).
+  // Claude SVG is the last-resort fallback when no image API is configured.
+  //
+  // Order: Recraft v3 (flat illustration style, best for instructional) →
+  // GPT Image 1 (best for diagrams with legible text labels) → Claude SVG.
   const order: Array<() => Promise<GenerateResult | null>> = [];
-
-  const wantsRaster = style === "illustration";
-
-  if (wantsRaster) {
-    if (process.env.FAL_KEY) order.push(() => tryRecraftFal(opts));
-    if (process.env.OPENAI_API_KEY) order.push(() => tryOpenAiImage(opts));
-    if (process.env.ANTHROPIC_API_KEY) order.push(() => tryClaudeSvg(opts));
-  } else {
-    if (process.env.ANTHROPIC_API_KEY) order.push(() => tryClaudeSvg(opts));
-    if (process.env.FAL_KEY) order.push(() => tryRecraftFal(opts));
-    if (process.env.OPENAI_API_KEY) order.push(() => tryOpenAiImage(opts));
-  }
+  if (process.env.FAL_KEY) order.push(() => tryRecraftFal(opts));
+  if (process.env.OPENAI_API_KEY) order.push(() => tryOpenAiImage(opts));
+  if (process.env.ANTHROPIC_API_KEY) order.push(() => tryClaudeSvg(opts));
 
   for (const attempt of order) {
     try {
@@ -294,11 +290,16 @@ function decodeSvgFromDataUri(dataUri: string): string | null {
 // ---------- style locking ----------
 
 const STYLE_PREAMBLE =
-  "Flat illustration in a friendly science-textbook style. " +
-  "Bold but limited color palette: deep purple #6C63FF, teal #4ECDC4, coral #FF6B6B, warm yellow #FFEAA7, soft cream #FFF6E5. " +
-  "Thin dark outlines, friendly geometric shapes, clean labels in a sans-serif font. " +
-  "White or very light cream background. Kid-appropriate, NO realistic faces, NO photorealism. " +
-  "Clear, instructional, like a Bill Nye textbook illustration crossed with WikiHow.";
+  "WikiHow-style instructional illustration for a kids' science guide. " +
+  "Style: flat vector illustration with thin dark outlines (#2D3436), friendly bold colors, soft cream background (#FFF6E5). " +
+  "Palette: deep purple (#6C63FF), teal (#4ECDC4), coral (#FF6B6B), warm yellow (#FFEAA7). " +
+  "Each named object must be DRAWN AS THE LITERAL REAL-WORLD ITEM — not abstract icons. " +
+  "Coins are circles. LEDs have a dome head with two leads. Bottles have a neck. Cups have a tapered shape. " +
+  "Rubber bands are taut straight lines between two anchors. A shoebox guitar is a literal shoebox with rubber bands stretched across the open top and a pencil bridge laid across them. " +
+  "Add SHORT TEXT LABELS with thin leader lines pointing to each major component. Labels in a clean sans-serif, dark color, no overlapping. " +
+  "No scenery, no people, no decorative elements — only the components mentioned. " +
+  "One single instructional illustration filling the frame. NO photorealism, NO realistic faces. " +
+  "Think Bill Nye textbook crossed with WikiHow.";
 
 function styleSuffix(style?: DiagramStyle): string {
   switch (style) {

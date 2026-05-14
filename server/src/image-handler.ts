@@ -105,6 +105,23 @@ imageRouter.get("/resolve", async (req: Request, res: Response) => {
   }
 });
 
+// ---------- GET /stock/:filename ----------
+// Serves a hand-curated stock supply image (e.g. rubber-band.png).
+
+imageRouter.get("/stock/:filename", async (req: Request, res: Response) => {
+  const { readStockFile } = await import("./stock-images.js");
+  const file = readStockFile(req.params.filename);
+  if (!file) {
+    res.status(404).json({ error: "not_found" });
+    return;
+  }
+  res.setHeader("Content-Type", file.mime);
+  // Stock files can be updated by the operator, so allow validation reuse but
+  // not aggressive caching.
+  res.setHeader("Cache-Control", "public, max-age=300");
+  res.send(file.buffer);
+});
+
 // ---------- GET /render/:filename ----------
 
 imageRouter.get("/render/:filename", (req: Request, res: Response) => {
