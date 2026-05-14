@@ -25,7 +25,32 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const STOCK_DIR = path.resolve(__dirname, "../../data/stock-images");
+/**
+ * Find the stock-images directory. Candidates, in order:
+ *   1. /app/stock-images                              (Docker prod — outside the volume mount)
+ *   2. <repo>/server/data/stock-images                (local dev)
+ *   3. /app/server/data/stock-images                  (Docker prod — pre-volume layout)
+ *   4. /app/data/stock-images                         (fallback if someone bind-mounted them here)
+ */
+function resolveStockDir(): string {
+  const candidates = [
+    "/app/stock-images",
+    path.resolve(__dirname, "../../data/stock-images"), // <repo>/server/data/stock-images
+    path.resolve(__dirname, "../../../server/data/stock-images"), // <repo>/server/data/stock-images from dist
+    "/app/server/data/stock-images",
+    "/app/data/stock-images",
+  ];
+  for (const c of candidates) {
+    try {
+      if (fs.existsSync(c) && fs.statSync(c).isDirectory()) return c;
+    } catch {
+      /* keep looking */
+    }
+  }
+  return candidates[0]; // doesn't exist, but pick a deterministic default
+}
+
+const STOCK_DIR = resolveStockDir();
 
 interface StockImage {
   /** Absolute file path on disk */

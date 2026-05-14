@@ -4,8 +4,8 @@ node_modules
 **/.env
 **/.env.local
 data
-server/data
-# Ship the curated stock supply images in the Docker context
+server/data/*
+# Ship the curated stock supply images in the Docker build context.
 !server/data/stock-images
 !server/data/stock-images/**
 .git

@@ -4,9 +4,9 @@ dist/
 .env.local
 *.log
 .DS_Store
-# Exclude everything in server/data EXCEPT the curated stock-images directory,
-# which IS committed (bundled with the app). Negations only work if the parent
-# isn't fully excluded — so we whitelist specific subpaths instead.
+# Exclude runtime app data EXCEPT the curated stock-images bundle, which IS
+# committed (it ships with the Docker image). Negations only work when the
+# parent directory itself isn't fully excluded, so we use /<path>/* form.
 server/data/*
 !server/data/stock-images/
-data/
+/data/

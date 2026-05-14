@@ -61,6 +61,11 @@ RUN echo "=== Runtime client-dist contents ===" && ls -la /app/client-dist/
 # Attach a Railway Volume mounted at /app/data so this persists across deploys.
 RUN mkdir -p /app/data
 
+# Bundle the curated stock supply images (Twemoji, CC-BY 4.0) into the image.
+# DELIBERATELY outside /app/data so a Railway volume mount at /app/data does
+# not shadow them. stock-images.ts probes both paths.
+COPY --from=builder /app/server/data/stock-images /app/stock-images
+
 # Documentation-only — actual port comes from runtime $PORT (Railway sets it).
 EXPOSE 8080
 # Healthcheck hits whatever port the app is actually on via $PORT.
