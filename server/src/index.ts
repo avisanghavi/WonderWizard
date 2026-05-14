@@ -60,6 +60,7 @@ import { imageRouter } from "./image-handler.js";
 import { mockLabRouter } from "./mock-lab-handler.js";
 import { initDb } from "./db.js";
 import { getMessagesBySession } from "./repositories/message-repo.js";
+import { requireParentAuth } from "./auth-middleware.js";
 import {
   chatBurstLimiter,
   chatHourlyLimiter,
@@ -186,34 +187,40 @@ app.use("/api", generalLimiter);
 // stays available for future auth-sensitive endpoints if we add any.
 void authLimiter;
 
+// Auth-gate every expensive / kid-facing route. requireParentAuth verifies
+// the Supabase JWT bearer token and 401s otherwise. The mock-lab and image
+// /render endpoints stay open (no AI cost, cached files only).
+//
 // Chat — apply burst + hourly + daily limits in series
-app.use("/api/chat", chatBurstLimiter, chatHourlyLimiter, chatDailyLimiter, chatRouter);
+app.use("/api/chat", requireParentAuth, chatBurstLimiter, chatHourlyLimiter, chatDailyLimiter, chatRouter);
 
 // Heavy AI endpoints (syllabus parsing, DIY guide generation)
 app.use(
   "/api/syllabus",
+  requireParentAuth,
   heavyAiLimiter,
   heavyAiDailyLimiter,
   upload.single("syllabus"),
   syllabusRouter
 );
-app.use("/api/diy", heavyAiLimiter, heavyAiDailyLimiter, diyRouter);
+app.use("/api/diy", requireParentAuth, heavyAiLimiter, heavyAiDailyLimiter, diyRouter);
 
 // Mock lab — no AI, no DB, returns the same curated curriculum every time.
+// Deliberately UNGATED so the marketing landing page can preview it.
 app.use("/api/mock-lab", mockLabRouter);
 
-app.use("/api/gamification", gamificationRouter);
-app.use("/api/notebook", notebookRouter);
-app.use("/api/parent", parentRouter);
-app.use("/api/billing", billingRouter);
-app.use("/api/mysteries", mysteryRouter);
+app.use("/api/gamification", requireParentAuth, gamificationRouter);
+app.use("/api/notebook", requireParentAuth, notebookRouter);
+app.use("/api/parent", parentRouter); // routes inside set their own auth
+app.use("/api/billing", billingRouter); // routes inside set their own auth
+app.use("/api/mysteries", requireParentAuth, mysteryRouter);
 // Image generation is expensive (LLM call) → gate the resolve endpoints.
 // /render/:filename serves bytes from disk → no gate, cheap.
-app.use("/api/images/resolve", heavyAiLimiter, heavyAiDailyLimiter);
+app.use("/api/images/resolve", requireParentAuth, heavyAiLimiter, heavyAiDailyLimiter);
 app.use("/api/images", imageRouter);
 
 // Chat history endpoint
-app.get("/api/sessions/:sessionId/messages", (req, res) => {
+app.get("/api/sessions/:sessionId/messages", requireParentAuth, (req, res) => {
   try {
     const messages = getMessagesBySession(req.params.sessionId);
     res.json({ messages });

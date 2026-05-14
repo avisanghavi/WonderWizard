@@ -7,7 +7,7 @@ import DIYGuidePage from './components/DIYGuidePage';
 import MockLabPage from './pages/MockLabPage';
 import ParentDashboard from './pages/ParentDashboard';
 import AuthModal from './components/AuthModal';
-import { hasSession, parentLogout } from './api/parent';
+import { parentLogout } from './api/parent';
 import { supabase } from './supabase';
 
 type AppView = 'chat' | 'syllabus-map' | 'diy-guide' | 'parent';
@@ -27,35 +27,41 @@ function MainApp() {
   const [currentDIYGuide, setCurrentDIYGuide] = useState<DIYGuide | null>(null);
   // Which syllabus to show in the map — default to first
   const [activeSyllabusIdx, setActiveSyllabusIdx] = useState(0);
-  // Parent auth state — drives the parent dashboard entry point
-  const [parentAuthed, setParentAuthed] = useState<boolean>(() => hasSession());
-  const [showAuthModal, setShowAuthModal] = useState<null | 'signup' | 'login'>(null);
+  // Auth state.
+  //   authStatus: 'loading'  → first paint, still hydrating session from storage
+  //                'out'     → no session — show landing/auth gate
+  //                'in'      → signed in, app is usable
+  // authMode is the AuthModal variant shown on top of the gate (signup vs login).
+  const [authStatus, setAuthStatus] = useState<'loading' | 'in' | 'out'>('loading');
+  const [authMode, setAuthMode] = useState<'signup' | 'login'>('login');
 
   useEffect(() => {
-    // Drive auth state from Supabase's own auth event stream.
+    // Hydrate session once on mount.
+    supabase.auth.getSession().then(({ data }) => {
+      setAuthStatus(data.session ? 'in' : 'out');
+    });
+    // Then subscribe to auth state changes (login, logout, refresh).
     const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
-      setParentAuthed(!!session);
+      setAuthStatus(session ? 'in' : 'out');
     });
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  const parentAuthed = authStatus === 'in';
+
   const handleOpenParent = useCallback(() => {
-    if (parentAuthed) {
-      setView('parent');
-    } else {
-      setShowAuthModal('login');
-    }
-  }, [parentAuthed]);
+    setView('parent');
+  }, []);
 
   const handleAuthSuccess = useCallback((_userId: string) => {
-    setParentAuthed(true);
-    setShowAuthModal(null);
-    setView('parent');
+    // onAuthStateChange will flip authStatus to 'in' automatically.
+    setView('chat');
   }, []);
 
   const handleParentLogout = useCallback(async () => {
     await parentLogout();
-    setParentAuthed(false);
+    // onAuthStateChange flips authStatus → 'out' automatically.
+    setChildAge(null);
     setView('chat');
   }, []);
 
@@ -95,6 +101,121 @@ function MainApp() {
     setCurrentDIYGuide(null);
     setView('chat');
   }, []);
+
+  // ---------- auth gate ----------
+
+  // Loading state — Supabase is hydrating the session from localStorage.
+  // Show a minimal splash so we don't flash the unauthed UI on every reload.
+  if (authStatus === 'loading') {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontFamily: 'inherit',
+        }}
+      >
+        <div style={{ opacity: 0.7 }}>Loading…</div>
+      </div>
+    );
+  }
+
+  // Signed out — block the entire app behind a welcome + AuthModal.
+  if (authStatus === 'out') {
+    return (
+      <div className="app">
+        <header className="app-header">
+          <div className="app-header__logo">
+            <span className="app-header__icon">{'🧪'}</span>
+            <span className="app-header__title">LabBuddy</span>
+          </div>
+          <p className="app-header__tagline">Your AI Learning Copilot</p>
+        </header>
+
+        <div
+          style={{
+            minHeight: 'calc(100vh - 100px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem',
+            textAlign: 'center',
+            color: 'white',
+            gap: '1.25rem',
+          }}
+        >
+          <div style={{ fontSize: '4rem', lineHeight: 1 }}>{'🧪'}</div>
+          <h1 style={{ fontSize: '2.25rem', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }}>
+            Welcome to LabBuddy
+          </h1>
+          <p style={{ maxWidth: 460, margin: 0, fontSize: '1.05rem', lineHeight: 1.55, opacity: 0.92 }}>
+            The AI learning copilot for curious kids. Parents create a free
+            account to keep things safe, supervised, and on track.
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.75rem',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              marginTop: '0.5rem',
+            }}
+          >
+            <button
+              onClick={() => setAuthMode('signup')}
+              style={{
+                background: 'white',
+                color: '#5b21b6',
+                border: 'none',
+                padding: '0.85rem 1.6rem',
+                borderRadius: 999,
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                boxShadow: '0 8px 28px rgba(0,0,0,0.18)',
+              }}
+            >
+              Create parent account
+            </button>
+            <button
+              onClick={() => setAuthMode('login')}
+              style={{
+                background: 'rgba(255, 255, 255, 0.18)',
+                border: '1.5px solid rgba(255, 255, 255, 0.4)',
+                color: 'white',
+                padding: '0.85rem 1.6rem',
+                borderRadius: 999,
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+
+        {/* Modal is always open in the gate — the user can't dismiss it.
+            They toggle signup/login from the buttons above. */}
+        <AuthModal
+          mode={authMode}
+          onClose={() => {
+            /* no-op — gated */
+          }}
+          onSuccess={handleAuthSuccess}
+        />
+      </div>
+    );
+  }
+
+  // ---------- signed in: full app ----------
 
   return (
     <div className="app">
@@ -138,7 +259,7 @@ function MainApp() {
             backdropFilter: 'blur(8px)',
           }}
         >
-          {parentAuthed ? '👤 Parent Dashboard' : '👤 Parent Sign In'}
+          {'👤 Parent Dashboard'}
         </button>
       </header>
 
@@ -191,13 +312,6 @@ function MainApp() {
             />
           )}
         </>
-      )}
-      {showAuthModal && (
-        <AuthModal
-          mode={showAuthModal}
-          onClose={() => setShowAuthModal(null)}
-          onSuccess={handleAuthSuccess}
-        />
       )}
     </div>
   );
